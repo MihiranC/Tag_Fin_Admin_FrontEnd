@@ -116,10 +116,31 @@ export class CommonLayoutComponent {
       }
     });
 
-    this.Router.navigate(['/app/'+this.mainMenues[headerIndex].pages![pageIndex].path])
+    if(this.hasQueryParams(this.mainMenues[headerIndex].pages![pageIndex].path)){
+      const [path, queryString] = ('/app/'+this.mainMenues[headerIndex].pages![pageIndex].path).split('?');
+      const queryParams = this.parseQueryParams(queryString);
+
+      this.router.navigate([path], { queryParams });
+    }else{
+      this.Router.navigate(['/app/'+this.mainMenues[headerIndex].pages![pageIndex].path])
+    }
   }
 
   logOut(){
     this.Router.navigate(['']);
+  }
+
+  hasQueryParams(url: string): boolean {
+    return url.includes('?');
+  }
+
+  parseQueryParams(queryString: string): any {
+    return queryString
+    .split('&')
+    .map(param => param.split('='))
+    .reduce((params: { [key: string]: string }, [key, value]) => {
+      params[key] = value;
+      return params;
+    }, {});
   }
 }

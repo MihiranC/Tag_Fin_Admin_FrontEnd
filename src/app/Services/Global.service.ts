@@ -4,17 +4,10 @@ import { Inject, Injectable, Injector, Type } from "@angular/core";
   providedIn: "root",
 })
 export class GlobalService {
-  primaryLendingApiUrl: string;
-  primaryCommonApiUrl: string;
-  primaryCommonApiUrlUpload: string;
-  primaryCentralLoginApiUrl: string;
-  primaryMessageQueueApiUrl: string;
+  adminApiUrl: string;
+  finApiUrl: string;
   key : string;
   iv : string ;
-
-  primaryURL  : string;
-  reportURL : string;
-  HNB_PABX : string;
 
   constructor(
     private injector: Injector,
@@ -29,17 +22,10 @@ export class GlobalService {
     ).settings;
 
     // do not hard code an api url in here.
-    this.primaryCentralLoginApiUrl = settings.apiUrls.primaryCentralLoginApiUrl;
-    this.primaryCommonApiUrl = settings.apiUrls.primaryCommonApiUrl;
-    this.primaryCommonApiUrlUpload = settings.apiUrls.primaryCommonApiUrlUpload;
-    this.primaryMessageQueueApiUrl = settings.apiUrls.primaryMessageQueueApiUrl;
-    this.primaryLendingApiUrl = settings.apiUrls.primaryLendingApiUrl;
-    this.primaryURL  = settings.apiUrls.primaryURL;
-    this.reportURL = settings.apiUrls.reportURL;
-    this.HNB_PABX = settings.apiUrls.HNB_PABX;
+    this.adminApiUrl = settings.apiUrls.adminURL;
+    this.finApiUrl = settings.apiUrls.finURL;
     this.key = settings.apiUrls.key;
     this.iv = settings.apiUrls.iv;
-    
   }
 }
 

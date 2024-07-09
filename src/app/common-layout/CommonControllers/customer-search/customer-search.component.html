@@ -1,0 +1,142 @@
+<span class="pi pi-search" style="cursor: pointer; font-size: 1.3rem" (click)="OpenSearch()"></span>
+<p-dialog header="Search Customer" [modal]="true" [(visible)]="visible" [style]="{ width: '50rem' }"
+    [breakpoints]="{ '2199px': '75vw', '875px': '90vw' }" [maximizable]="true">
+    <form [formGroup]="CustomerForm!">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="p-field p-fluid">
+                    <label>Code</label>
+                    <div class="flex">
+                        <input pInputText id="userName" type="text" formControlName="code">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="p-field p-fluid">
+                    <label>First Names</label>
+                    <input pInputText type="text" formControlName="firstName">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-field p-fluid">
+                    <label>Last Name</label>
+                    <input pInputText type="text" formControlName="lastName">
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-field p-fluid">
+                    <label>NIC</label>
+                    <input pInputText type="text" formControlName="nicNo">
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-field p-fluid">
+                    <label>Mobile Number</label>
+                    <p-inputMask type="text" formControlName="mobileNo" mask="9999999999" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-field p-fluid">
+                    <label>E mail Address</label>
+                    <input pInputText type="email" formControlName="email">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-4">
+                <div class="d-flex justify-content-end">
+                    <div class="p-field p-fluid">
+                        <label>Top Records</label>
+                        <div class="flex">
+                            <input pInputText type="number" formControlName="records">
+                            &nbsp;&nbsp;&nbsp;<span class="pi pi-search" style="cursor: pointer; font-size: 1.5rem" (click)="searchCustomer()"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <br>
+    <p-table #dt2 [value]="Customers" styleClass="p-datatable-striped p-datatable-sm" [tableStyle]="{'min-width': '50rem'}"
+        [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]"
+        [globalFilterFields]="['firstName', 'lastName']">
+        <ng-template pTemplate="caption">
+            <div class="flex justify-content-end align-items-center">
+                <div class="p-inputgroup" style="width: 40%; min-width: 300px;">
+                    <span class="p-inputgroup-addon">
+                        <i class="pi pi-search"></i>
+                    </span>
+                    <input pInputText type="text" (input)="onFilterGlobal($event)" placeholder="Search keyword"
+                        class="ml-auto" />
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Code</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Mobile Number</th>
+                <th>Email Address</th>
+                <th>NIC</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>
+                    <p-columnFilter type="text" field="code" placeholder="Search by code"
+                        ariaLabel="Filter Name" />
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="firstName" placeholder="Search by first name"
+                        ariaLabel="Filter Name" />
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="lastName" placeholder="Search by last name"
+                        ariaLabel="Filter Country" />
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="telNo" placeholder="Search by mobile no"
+                        ariaLabel="Filter Country" />
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="email" placeholder="Search by email"
+                        ariaLabel="Filter Country" />
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="nIC" placeholder="Search by NIC"
+                        ariaLabel="Filter Country" />
+                </th>
+                <th>
+                    
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-customer>
+            <tr>
+                <td>{{customer.code}}</td>
+                <td>{{customer.firstName}}</td>
+                <td>{{customer.lastName}}</td>
+                <td>{{customer.telNo}}</td>
+                <td>{{customer.email}}</td>
+                <td>{{customer.nIC}}</td>
+                <td>
+                    <button 
+                    type="button" 
+                    pButton 
+                    pRipple 
+                    icon="pi pi-send" 
+                    (click)="selectToPage(customer)">
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-dialog>

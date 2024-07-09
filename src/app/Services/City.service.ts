@@ -22,13 +22,14 @@ export class CityService {
   // }
 
   constructor(
-    private HttpService: HttpService
+    private HttpService: HttpService,
+    private GlobalService: GlobalService
   ) { }
 
 
 
   ReturnCities(cityID: number): Observable<Response> {
-    return this.HttpService.getData('api/TGAdmin/Ref_Cities/Select', `cityID=${cityID}`)
+    return this.HttpService.getData('api/TGAdmin/Ref_Cities/Select', `cityID=${cityID}`,this.GlobalService.adminApiUrl)
   }
 
 }

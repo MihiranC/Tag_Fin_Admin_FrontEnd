@@ -1,3 +1,5 @@
+@import 'colors.scss';
+
 .main-card-container{
     width:100%;
     border-radius: 10px;
@@ -6,8 +8,19 @@
     padding: 10px;
 }
 
+.sub-card-container{
+    width:100%;
+    border-radius: 10px 0px 0px 0px;
+    margin:5px 0px;
+    background-color: #ffffff;
+    padding: 5px 3px;
+    border-color: $sub-color;
+    border-left: solid 1px $sub-color;
+    border-top: solid 1px $sub-color;
+}
+
 .main-card-title{
-    margin-left: 3px;
+    //margin-left: 3px;
     padding-bottom: 5px;
 }
 
@@ -18,6 +31,11 @@
 .main-card-body-title{
     font-weight: 800;
 }
+
+.sub-card-body-title{
+    font-weight: 400;
+}
+
 
 .card-amount{
     font-size: x-large;

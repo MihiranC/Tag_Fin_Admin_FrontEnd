@@ -129,7 +129,6 @@
                   <th>Mobile Number</th>
                   <th>Email Address</th>
                   <th style="width: 5rem"></th>
-                  <th style="width: 5rem"></th>
               </tr>
               <tr>
                   <th>
@@ -161,7 +160,6 @@
                           ariaLabel="Filter Country" />
                   </th>
                   <th style="width: 5rem"></th>
-                  <th style="width: 5rem"></th>
               </tr>
           </ng-template>
           <ng-template pTemplate="body" let-user>
@@ -178,16 +176,7 @@
                         icon="pi pi-file-edit" 
                         (click)="selectDataToForm(user)">
                     </button>
-                  </td>
-                  <td>  
-                    <button 
-                        type="button" 
-                        pButton 
-                        pRipple 
-                        icon="pi pi-trash"
-                        (click)="confirmDialog(user)">
-                    </button>
-                  </td>
+                </td>
               </tr>
           </ng-template>
   </p-table>

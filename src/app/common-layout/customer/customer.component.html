@@ -1,0 +1,183 @@
+<div class="main-card-container">
+    <app-messages></app-messages>
+    <div class="main-card-title n-text-primary lg">Customer Details</div>
+    <form [formGroup]="CustomerForm!" (submit)="onSubmit()">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="p-field p-fluid">
+                    <label>Code</label>
+                    <div class="flex">
+                        <input pInputText id="userName" type="text" formControlName="code" readonly="true">
+                        @if(mode!="I"){
+                        &nbsp;<app-customer-search (getSelected)="SelectCustomerFromSearch($event)"></app-customer-search>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="p-field p-fluid">
+                    <label>First Names</label>
+                    <input pInputText type="text" formControlName="firstName" required [readonly]="this.readOnly">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-field p-fluid">
+                    <label>Last Name</label>
+                    <input pInputText type="text" formControlName="lastName" required [readonly]="this.readOnly">
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-field p-fluid">
+                    <label>NIC</label>
+                    <input pInputText type="text" formControlName="nicNo" required [readonly]="this.readOnly">
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-field p-fluid">
+                    <label>Mobile Number</label>
+                    <p-inputMask type="text" formControlName="mobileNo" mask="9999999999" [readonly]="this.readOnly"/>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-field p-fluid">
+                    <label>E mail Address</label>
+                    <input pInputText type="email" formControlName="email" required [readonly]="this.readOnly">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="sub-card-container row">
+                    <app-messages></app-messages>
+                    <div class="sub-card-title n-text-sub md">Address appear in NIC</div>
+                    <div class="col-md-6">
+                        <div class="p-field p-fluid">
+                            <label>Address Line 01</label>
+                            <input pInputText type="text" formControlName="nICAddressLine1" required [readonly]="this.readOnly">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-field p-fluid">
+                            <label>Address Line 02</label>
+                            <input pInputText type="text" formControlName="nICAddressLine2" [readonly]="this.readOnly">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-field p-fluid">
+                            <label>Address Line 03</label>
+                            <input pInputText type="text" formControlName="nICAddressLine3" [readonly]="this.readOnly">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-field p-fluid">
+                            <label>Address Line 04</label>
+                            <input pInputText type="text" formControlName="nICAddressLine4" [readonly]="this.readOnly">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="sub-card-container row">
+                    <app-messages></app-messages>
+                    <div class="sub-card-title n-text-sub md">Permenent address</div>
+                    @if(mode!="V"){
+                        <div class="flex align-items-center sm">
+                            <p-checkbox formControlName="sameAsNic" inputId="n" value="Same as NIC address" (onChange)="onSameAsNic($event)"/>
+                            <label for="n">&nbsp;Same as NIC address</label>
+                        </div>
+                    }
+                    <div class="col-md-6">
+                        <div class="p-field p-fluid">
+                            <label>Address Line 01</label>
+                            <input pInputText type="text" formControlName="permenantAddressLine1" required [readonly]="this.readOnly">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-field p-fluid">
+                            <label>Address Line 02</label>
+                            <input pInputText type="text" formControlName="permenantAddressLine2" [readonly]="this.readOnly">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-field p-fluid">
+                            <label>Address Line 03</label>
+                            <input pInputText type="text" formControlName="permenantAddressLine3" [readonly]="this.readOnly">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-field p-fluid">
+                            <label>Address Line 04</label>
+                            <input pInputText type="text" formControlName="permenantAddressLine4" [readonly]="this.readOnly">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="sub-card-container row">
+                    <app-messages></app-messages>
+                    <div class="sub-card-title n-text-sub md">Mailing address</div>
+                    @if(mode!="V"){
+                        <div class="flex align-items-center sm">
+                            <p-checkbox formControlName="sameAsPerm" inputId="p" value="Same as permenant address" (onChange)="onSameAsPermenant($event)"/>
+                            <label for="p">&nbsp;Same as permenant address</label>
+                        </div>
+                    }
+                    <div class="col-md-6">
+                        <div class="p-field p-fluid">
+                            <label>Address Line 01</label>
+                            <input pInputText type="text" formControlName="mailingAddressLine1" required [readonly]="this.readOnly">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-field p-fluid">
+                            <label>Address Line 02</label>
+                            <input pInputText type="text" formControlName="mailingAddressLine2" [readonly]="this.readOnly">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-field p-fluid">
+                            <label>Address Line 03</label>
+                            <input pInputText type="text" formControlName="mailingAddressLine3" [readonly]="this.readOnly">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-field p-fluid">
+                            <label>Address Line 04</label>
+                            <input pInputText type="text" formControlName="mailingAddressLine4" [readonly]="this.readOnly">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+        </div>
+
+        @if(mode!="V"){
+            <div class="row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="primary-buttons p-button-green" pButton pRipple
+                            [disabled]="CustomerForm?.invalid">
+                            <span>{{OperationBtnText}}</span>
+                        </button>
+                        <button type="button" class="primary-buttons p-button-yellow" pButton pRipple (click)="clearForm()">
+                            <span>Clear</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </form>
+</div>

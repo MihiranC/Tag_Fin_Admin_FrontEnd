@@ -13,8 +13,6 @@ import { Response } from '../Models/Response';
   providedIn: 'root'
 })
 export class HttpService {
-
-  private apiUrl = this.GlobalService.primaryURL;
   private cookie: string | null = null;
 
   constructor(
@@ -25,14 +23,14 @@ export class HttpService {
   ) { }
 
   // ------------- Without Cookie --------------------------------
-  postData(data: any, endpoint: string): Observable<Response> {
+  postData(data: any, endpoint: string, apiUrl: string): Observable<Response> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'responseType': 'text'
     });
     //data = this.EncryptionService.encrypt(JSON.stringify(data));
     const options = { headers: headers };
-    let url = `${this.apiUrl}/${endpoint}`;
+    let url = `${apiUrl}/${endpoint}`;
 
     return this.http.post(url, data, options)
       .pipe(
@@ -53,9 +51,9 @@ export class HttpService {
       );
   }
 
-  getData(endpoint: string, parameter: string): Observable<Response> {
+  getData(endpoint: string, parameter: string, apiUrl: string): Observable<Response> {
     //parameter = this.EncryptionService.encrypt(parameter);
-    let url = `${this.apiUrl}/${endpoint}`;
+    let url = `${apiUrl}/${endpoint}`;
     if (parameter.length > 0) {
       url += `?${parameter}`;
     }
@@ -86,9 +84,9 @@ export class HttpService {
 
   //----------------Get Login cookie -----------------------------
 
-  getLogin(endpoint: string, parameter: string): Observable<Response> {
+  getLogin(endpoint: string, parameter: string, apiUrl: string): Observable<Response> {
     parameter = this.EncryptionService.encrypt(parameter);
-    let url = `${this.apiUrl}/${endpoint}`;
+    let url = `${apiUrl}/${endpoint}`;
     if (parameter.length > 0) {
       url += `?${parameter}`;
     }
@@ -117,7 +115,7 @@ export class HttpService {
 
   // ------------- With Cookie --------------------------------
 
-  postDataWithCookie(data: any, endpoint: string): Observable<Response> {
+  postDataWithCookie(data: any, endpoint: string, apiUrl: string): Observable<Response> {
     this.cookie = sessionStorage.getItem("cookie");
     const headers = new HttpHeaders({
       'x-Cookie': this.cookie == null ? '' : this.cookie,
@@ -126,7 +124,7 @@ export class HttpService {
     });
     data = this.EncryptionService.encrypt(JSON.stringify(data));
     const options = { headers: headers };
-    let url = `${this.apiUrl}/${endpoint}`;
+    let url = `${apiUrl}/${endpoint}`;
 
     return this.http.post(url, data, options)
       .pipe(
@@ -148,12 +146,12 @@ export class HttpService {
   }
 
 
-  getDataWithCookie(endpoint: string, parameter: string): Observable<Response> {
+  getDataWithCookie(endpoint: string, parameter: string, apiUrl: string): Observable<Response> {
     this.cookie = sessionStorage.getItem("cookie");
     const headers = this.cookie ? new HttpHeaders({ 'x-Cookie': this.cookie }) : undefined;
     parameter = this.EncryptionService.encrypt(parameter);
 
-    let url = `${this.apiUrl}/${endpoint}`;
+    let url = `${apiUrl}/${endpoint}`;
     if (parameter.length > 0) {
       url += `?${parameter}`;
     }

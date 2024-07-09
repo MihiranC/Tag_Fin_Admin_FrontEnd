@@ -171,53 +171,5 @@ export class UserComponent {
         },
       });
   }
-
-  onDelete(row: any) {
-    //.userObject.userID =  row.userID;
-    this.userObject.username = row.username;
-    this.userObject.firstName = row.firstName;
-    this.userObject.lastName = row.lastName;
-    this.userObject.addressLine1 = row.addressLine1;
-    this.userObject.addressLine2 = row.addressLine2;
-    this.userObject.addressLine3 = row.addressLine3;
-    this.userObject.addressLine4 = row.addressLine4;
-    this.userObject.mobileNo = row.mobileNo;
-    this.userObject.email = row.email;
-
-
-    this.userObject.userID = row.userID;
-
-    this.userService.DeleteUsers(this.userObject)
-      .subscribe(data => {
-        if (data.code == "1000") {
-          //this.alertService.showSuccess('Successfully deleted')
-          this.clearForm();
-          //this.loadExistingUser();
-        }
-        else {
-          //this.alertService.showError(data.description)
-        }
-      }
-      );
-  }
-
-  confirmDialog(row: any): void {
-    const message = `Are you sure you want to delete this?`;
-
-    //const dialogData = new ConfirmDialogModel("Delete confirmation", message);
-
-    // const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-    //   data: dialogData,
-    //   panelClass: 'custom-error-dialog-container'
-    // });
-
-    // dialogRef.afterClosed().subscribe(dialogResult => {
-    //   if (dialogResult) {
-    //     this.onDelete(row);
-    //   }
-    // });
-  }
-
-
 }
 

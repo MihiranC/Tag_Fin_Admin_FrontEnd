@@ -1,3 +1,7 @@
+.flex{
+  display: flex;
+}
+
 .p-inputtext {
   padding: 2px;
   background-color: #D9D9D9 !important;
@@ -5,6 +9,10 @@
   color: #060F3D;
   font-size: small;
   padding-left: 10px;
+}
+
+.p-icon-field-left > .p-inputtext {
+  padding-left: 2.5rem;
 }
 
 .p-field {

@@ -30,4 +30,6 @@ export class CustomerService {
   Select(code: string, firstName: string, lastName: string, mobileNo: string, nicNo: string, email: string, records: number): Observable<any> {
     return this.HttpService.getData('api/TagFin/Customer/Select', `code=${code}&firstName=${firstName}&lastName=${lastName}&mobileNo=${mobileNo}&nicNo=${nicNo}&email=${email}&records=${records}`,this.GlobalService.finApiUrl)
   }
+
+  //add sample
 }

@@ -1,0 +1,61 @@
+<div class="container-fluid-login">
+  <div class="loginbg" style="background-image: url(../../assets/Images/LogingBGs/financeBG.svg);">
+    <div class="row" style="width: 100%; margin-left: 0px;">
+      <div class="col-md-9"></div>
+      <div class="col-md-3">
+        <div class="title-div">Smart & Easy Finance Trend</div>
+        <div class="title-div-main">EVOFIN</div>
+        <div class="login-form-div n-text-title">
+          <table style="width: 100%">
+            <tbody>
+              <tr style="height: 50px; padding-top: 30px; width: 100%">
+                <td style="width: 30px;">
+                  <img
+                    src="./../../assets/Images/icon.png"
+                    style="height: 50px"
+                    alt="Image"
+                  />
+                </td>
+                <td style="font-size: xx-large;">Login </td>
+              </tr>
+            </tbody>
+          </table>
+          <form [formGroup]="LoginForm!"  (submit)="Login()" >
+            <div class="p-field p-fluid">
+              <label for="userName">User name</label>
+              <span>
+                <input id="userName" type="text" pInputText formControlName="username" required />
+              </span>
+            </div>
+            <div class="p-field p-fluid">
+              <label for="password">Password</label>
+              <span>
+                <input id="password" type="password" pInputText formControlName="password" required />
+              </span>
+            </div>
+            <div style="width: 100%; display: flex; justify-content: center; padding-top: 10px;">
+              <span style="padding-left: 3px; text-align: center !important">
+                <img style="width: 15px" src="../../assets/Imgaes/icons/lock.png" alt="" />
+                &nbsp;<a routerLink="/ForgotPassword" style="text-decoration: none;">Forgot your password?</a>
+              </span>
+            </div>
+            <app-messages></app-messages>
+            <div style="
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                padding-top: 10px;
+              ">
+              <button type="submit" class="p-button-green" pButton pRipple
+              [disabled]="LoginForm?.invalid"  label="Sign-in"></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="login-footer">
+    &nbsp;<div class="title-footer-main">EVOFIN</div>&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Copyright &copy; 2024
+  </div>
+</div>
+

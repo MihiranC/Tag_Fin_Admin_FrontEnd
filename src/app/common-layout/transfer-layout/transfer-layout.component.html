@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-md-8 custom-tab-header hide-mobile">
+    <div class="custom-tab n-text-lightblue sm registered tab-selected" (click)="goTo('registered')">
+      Third-Party Registered
+    </div>
+    <div class="custom-tab n-text-lightblue sm thirdpartynew" (click)="goTo('thirdpartynew')">Third-Party New</div>
+    <div class="custom-tab n-text-lightblue sm ownaccount" (click)="goTo('ownaccount')">Own Account</div>
+    <div class="custom-tab n-text-lightblue sm payee" (click)="goTo('payee')">Payees</div>
+  </div>
+  <div class="col-md-8 show-mobile">
+    <p-dropdown [options]="transferTypes" optionLabel="name"></p-dropdown>
+  </div>
+</div>
+<br />
+<router-outlet></router-outlet>

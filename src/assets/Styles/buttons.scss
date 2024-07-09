@@ -1,0 +1,96 @@
+
+button {
+    border-radius: 10px;
+}
+
+.primary-buttons{
+  min-width: 100px;
+}
+
+.p-button {
+    padding: 2px 15px !important;
+    border-radius: 5px;
+    margin : 3px;
+}
+
+.p-button-blue {
+    padding: 5px 30px !important;
+    border-radius: 20px;
+    margin : 3px;
+    background-color: #00377B;
+    color: #ffffff;
+    border-color: #00377B;
+}
+
+.p-button-blue-sm {
+  padding: 5px 30px !important;
+  border-radius: 20px;
+  margin : 3px;
+  background-color: #00377B;
+  color: #ffffff;
+  border-color: #00377B;
+  font-size: small;
+}
+
+.p-button-green {
+    padding: 5px 30px !important;
+    border-radius: 20px;
+    margin : 10px 3px;
+    background-color: #6DC100;
+    border-color: #6DC100;
+    color: #060F3D;
+}
+
+.p-button-yellow {
+  padding: 5px 30px !important;
+  border-radius: 20px;
+  margin : 10px 3px;
+  background-color: #ebd13f;
+  border-color: #ebd13f;
+  color: #060F3D;
+}
+
+.p-button-green-sm {
+  padding: 5px 30px !important;
+  border-radius: 20px;
+  margin : 3px;
+  background-color: #6DC100;
+  border-color: #6DC100;
+  color: #060F3D;
+  font-size: small;
+}
+
+
+.p-button-label {
+    font-weight: 400 !important;
+}
+
+.p-button-blue-shade {
+  padding: 5px 15px !important;
+  border-radius: 5px;
+  margin : 3px;
+  background: linear-gradient(257.42deg, #75B4FF 24.61%, #0044A9 99.76%);
+  color: #ffffff;
+  min-width: 120px;
+  font-size: small;
+}
+
+.p-button-blue-shade-icon {
+  padding: 5px 15px !important;
+  border-radius: 5px;
+  margin : 3px;
+  background: linear-gradient(257.42deg, #75B4FF 24.61%, #0044A9 99.76%);
+  color: #ffffff;
+  font-size: small;
+  border: 1px solid #0044A9;
+}
+
+.p-button-red-shade-icon{
+  padding: 5px 15px !important;
+  border-radius: 5px;
+  margin : 3px;
+  background: linear-gradient(257.42deg, #ff7575 24.61%, #a90000 99.76%);
+  color: #ffffff;
+  font-size: small;
+  border: 1px solid #a90000;
+}

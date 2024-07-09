@@ -1,0 +1,84 @@
+<div class="container-fluid">
+  <div class="nav-bar-container">
+    <div class="logo-container">
+      <img src="./../../assets/Images/icon.png" style="width: 60%; padding: 10px;" alt="Image" />
+    </div>
+    <div class="nav-bar">
+      <div class="row">
+        <p-accordion class="w-full">
+          @for (header of mainMenues; track header.headerName; let index = $index ) {
+          <p-accordionTab class="nav-menu-header">
+            <ng-template pTemplate="header">
+              <i [ngClass]="['nav-icon', header.icon]"></i> &nbsp; {{header.headerName}}
+            </ng-template>
+            @for (submenu of header.pages; track submenu.pageName; let subindex = $index ) {
+            <div class="nav-sub-menues" [ngClass]="{'nav-sub-selected': submenu.selected}" (click)="goToPage(subindex,index)">
+              {{submenu.pageName}}
+            </div>
+            }
+          </p-accordionTab>
+          }
+        </p-accordion>
+      </div>
+    </div>
+  </div>
+  <div class="body-layout">
+    <div class="first-line">
+    </div>
+    <div class="body-content">
+
+      <!-- WEB -->
+      <div style="padding-top: 10px;" class="hide-mobile">
+        <table style="width: 100%">
+          <tbody>
+            <tr style="height: 50px; padding-top: 10px; width: 100%">
+              <td>
+                <div class="title-nav-main">EVOFIN</div>
+              </td>
+              <td style="content: right; width: 5%">
+                <i class="pi pi-bell text-3xl" pBadge value="2" style="font-size: xx-large;"></i>
+              </td>
+              <td style="content: right; width: 150px">
+                <span class="n-text-title">Hi {{username}},</span>
+                <br /><span class="n-text-disabled">Good Morning</span>
+              </td>
+              <td style="content: right; width: 1%">
+                <i class="pi pi-power-off text-3xl" style="font-size: x-large; cursor: pointer;" (click)="logOut()" ></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Mobile -->
+      <div style="padding-top: 10px;" class="show-mobile">
+        <table style="width: 100%">
+          <tbody>
+            <tr style="height: 50px; padding-top: 30px; width: 100%">
+              <td style="width: 5%">
+                <div class="title-nav-main">EVOFIN</div>
+              </td>
+              <td style="content: right;text-align: right;">
+                <i class="pi pi-bell text-3xl" pBadge value="2" style="font-size: xx-large;"></i>
+                &nbsp;
+                <span class="n-text-title">Hi {{username}},</span>
+                &nbsp;
+                <i class="pi pi-power-off text-3xl" style="font-size: x-large; cursor: pointer;" (click)="logOut()" ></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <table>
+        <tbody>
+          <tr>
+            <td style="vertical-align: middle; width: 40px;"><i class="pi pi-bars text-3xl drag-menu" (click)="showHideMenu()"></i></td>
+            <td style="vertical-align: middle;"><div class="n-text-primary" [innerHtml]="mainTitle"></div></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="inner-body-content">      
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

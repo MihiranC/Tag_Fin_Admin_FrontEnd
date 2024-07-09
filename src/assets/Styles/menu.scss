@@ -1,0 +1,68 @@
+
+.main-menu{
+    margin: 1px;
+    font-size: 20px;
+    padding-top:10px;
+    transition: 0.1s; 
+    display: flex;
+}
+
+.sub-main-menu{    
+    margin: 1px;
+    font-size: 15px;
+    padding-top:5px;
+    padding-bottom:5px;
+    transition: width 0.3s; 
+    display: flex;
+    transition: 0.3s;
+}
+
+.sub-main-menu:hover{    
+    cursor: pointer;
+    color: #a4ebf8;
+}
+
+.main-menu-icon{
+    margin-left:14px;
+    margin-right:15px;
+    font-size: large;
+    transition: 0.3s;
+    width:18px;
+    text-align: center;
+}
+
+.sub-menu-icon{
+    margin-left:8px;
+    margin-right:20px;
+}
+
+.main-menu:hover{
+    cursor: pointer;
+    color: #a4ebf8;
+}
+
+.sub-menu-lable{
+    font-size: x-small;
+    display: inline-block; /* Keep the span inline but respect width */
+    overflow: hidden; /* Hide any overflowing content */
+    text-overflow: ellipsis; /* Display an ellipsis for overflowing text */
+    white-space: nowrap;
+}
+
+.main-menu-lable{
+    font-size: small;
+    display: inline-block; /* Keep the span inline but respect width */
+    overflow: hidden; /* Hide any overflowing content */
+    text-overflow: ellipsis; /* Display an ellipsis for overflowing text */
+    white-space: nowrap;
+    transition: 0.3s;
+}
+
+.menu-seperator{
+    width: calc(100% - 2em);
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-top: 0.5em;
+    box-shadow: 1px 1px 1px 1px #888888;
+    border-bottom: #888888;
+}

@@ -1,0 +1,562 @@
+.card-with-border{
+  width: 100%;
+  padding:20px;
+  z-index : 5000
+}
+
+
+.card-with-border .card-with-border-heading{
+  margin-left: 2%;
+  margin-right: 2%;
+  background-color: rgb(202, 149, 207);
+  background-image: linear-gradient(to right, rgb(209, 96, 243) , rgb(255, 255, 253));
+  display: inline-block;
+  position: relative;
+  font-size: 20px;
+  padding: 15px 50px;
+  border-radius: 7px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.card-with-border .card-with-border-heading-yellow{
+  margin-left: 2%;
+  margin-right: 2%;
+  background-color: rgba(190, 44, 248, 0.904);
+  display: inline-block;
+  position: relative;
+  font-size: 20px;
+  padding: 15px 50px;
+  border-radius: 7px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-color: rgb(59, 53, 14);
+  color:rgb(0, 0, 0);
+  text-shadow: 2px 2px 5px rgb(139, 139, 139);
+}
+
+.card-with-border .card-with-border-body{
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.493);
+  display: inline-block;
+  margin-top: -25px;
+  text-align: left;
+  z-index: 15000;
+  padding: 35px 25px 20px 20px;
+  border-radius: 10px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(191, 37, 238);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.card-with-border .card-with-border-body-white{
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  display: inline-block;
+  margin-top: -25px;
+  text-align: left;
+  z-index: 15000;
+  padding: 35px 25px 20px 20px;
+  border-radius: 10px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(191, 37, 238);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+@media screen and (max-width: 600px) {
+  .card-with-border .card-with-border-heading{
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 10px 20px;
+  }
+}
+
+
+.note-card{
+  width: 100%;
+  background-color: rgba(236, 209, 241, 0.856);
+  display: inline-block;
+  text-align: left;
+  padding: 5px;
+  border-radius: 10px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(177, 146, 192);
+  margin: 10px;
+}
+
+.selectable .note-card:hover{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
+}
+
+.selected-note-card{
+  background-color: rgba(195, 111, 243, 0.856);
+}
+
+.img-card{
+  width: 99%;
+  display: inline-block;
+  margin: 10px;
+}
+
+
+.img-card .img{
+  width: 100%;
+  border-radius: 10px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(192, 181, 146);
+}
+
+
+.note-card-marging-free{
+  width: 100%;
+  background-color: rgba(233, 209, 241, 0.856);
+  display: inline-block;
+  text-align: left;
+  padding: 5px;
+  border-radius: 10px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(181, 146, 192);
+}
+
+.note-card-marging-free-light-green{
+  width: 100%;
+  background-color: rgba(212, 241, 209, 0.856);
+  display: inline-block;
+  text-align: left;
+  padding: 5px;
+  border-radius: 10px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(163, 189, 134);
+}
+
+.note-card-marging-free-light-orange{
+  width: 100%;
+  background-color: rgba(248, 210, 140, 0.856);
+  display: inline-block;
+  text-align: left;
+  padding: 5px;
+  border-radius: 10px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(189, 181, 134);
+}
+
+
+
+//profile card
+
+.card-profile{
+  margin: 5px;
+  width: 100%;
+  text-align: center;
+}
+
+.card-profile-right{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+  text-align: right !important;
+}
+
+.card-profile-left{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+  text-align: left !important;
+}
+
+.card-profile-comment{
+  padding-top: 5px;
+  padding-bottom: 2px;
+  width: 100%;
+  text-align: left !important;
+}
+
+
+.card-profile .card-profile-picture{
+  background-color: rgb(194, 149, 207);
+  background-image: linear-gradient(to right, rgb(209, 96, 243) , rgb(255, 255, 253));
+  display: inline-block;
+  position: relative;
+  font-size: 20px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width:120px;
+  height:120px;
+}
+
+.card-profile .card-profile-body{
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  display: inline-block;
+  margin-top: -25px;
+  z-index: -50;
+  padding: 45px 25px 20px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.card-profile-right .card-profile-picture{
+  background-color: rgb(194, 149, 207);
+  background-image: linear-gradient(to right, rgb(209, 96, 243) , rgb(255, 255, 253));
+  display: inline-block;
+  position: relative;
+  font-size: 20px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width:120px;
+  height:120px;
+}
+
+.card-profile-right .card-profile-body{
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  display: inline-block;
+  margin-top: -25px;
+  z-index: -50;
+  padding: 45px 25px 20px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.card-profile-left .card-profile-picture{
+  background-color: rgb(194, 149, 207);
+  background-image: linear-gradient(to right, rgb(209, 96, 243) , rgb(255, 255, 253));
+  display: inline-block;
+  position: relative;
+  font-size: 20px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width:120px;
+  height:120px;
+}
+
+.card-profile-left .card-profile-body{
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  display: inline-block;
+  margin-top: -25px;
+  z-index: -50;
+  padding: 45px 25px 20px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.card-profile-left .img-body{
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  display: inline-block;
+  margin-top: -25px;
+  z-index: -50;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.card-profile-left .card-profile-picture-down{
+  background-color: rgb(194, 149, 207);
+  background-image: linear-gradient(to right, rgb(209, 96, 243) , rgb(255, 255, 253));
+  display: inline-block;
+  position: relative;
+  font-size: 20px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border: solid;
+  border-width: 3px;
+  border-color: white;
+  width:80px;
+  height:80px;
+  top: -50px;
+  left: 10px;
+}
+
+.card-profile-comment .card-profile-body{
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  display: inline-block;
+  margin-top: -30px;
+  z-index: -50;
+  padding: 25px 15px 15px 45px;
+  border-radius: 10px;
+}
+
+.card-profile-comment .card-profile-comment-name{
+  z-index: 20;
+  display: inline-block;
+  position: relative;
+  background-color: rgb(250, 241, 191);
+  padding: 5px 15px 5px 5px;
+  border-radius: 10px;
+}
+
+.card-profile-comment .card-profile-picture{
+  background-color: rgb(194, 149, 207);
+  background-image: linear-gradient(to right, rgb(209, 96, 243) , rgb(255, 255, 253));
+  display: inline-block;
+  position: relative;
+  font-size: 20px;
+  border-radius: 50%;
+  width:120px;
+  height:120px;
+}
+
+.card-profile-comment .card-profile-delete{
+  background-color: rgb(216, 90, 90);
+  font-size: 15px;
+  border-radius: 50%;
+  width:90px;
+  height:90px;
+  margin-top: 15px;
+  display: inline-block;
+  position: relative;
+  float: right;
+  z-index: 50;
+  right : 9px;
+  bottom: 0;
+  color: white;
+  text-align: center;
+  padding-top: 5px;
+  cursor: pointer;
+}
+
+.comment-box{
+  width: 100%;
+  background-color: rgb(240, 229, 193);
+  display: inline-block;
+  margin-left: 15px;
+  margin-right: 15px;
+  padding: 15px 15px 15px 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.comment-send{
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1500px) {
+  .card-profile-left .card-profile-picture-down {
+    width:120px;
+    height:120px;
+    left: 20px;
+  }
+}
+
+@media screen and (max-width: 1100px) and (min-width: 770px) {
+  .card-profile-left .card-profile-picture-down {
+    width:100px;
+    height:100px;
+    top: -50px;
+    left: 15px;
+  }
+
+  .grid{
+    padding: 0px !important;
+  }
+  
+  //for class card
+  .class-card{
+    width: 50% !important;
+    max-width: 50% !important;
+    flex: 0 0 50%!important;
+  }
+}
+
+@media screen and (max-width: 1500px) and (min-width: 1100px) { 
+
+  //for class card
+  .class-card{
+    width: 50% !important;
+    max-width: 50% !important;
+    flex: 0 0 50%!important;
+  }
+}
+
+
+@media screen and (max-width: 1100px) and (min-width: 800px) { 
+
+  //for class card
+  .class-card{
+    width: 50% !important;
+    max-width: 50% !important;
+    flex: 0 0 50%!important;
+  }
+}
+
+
+@media screen and (max-width: 800px) {
+  //for class card
+  .class-card{
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100%!important;
+  }
+}
+
+
+@media screen and (max-width: 770px) {
+  .card-profile-left .card-profile-picture-down {
+    width:120px;
+    height:120px;
+    left: 20px;
+  }
+
+  .grid{
+    padding: 0px !important;
+  }
+}
+
+
+
+.error-card{
+  width: 100%;
+  background-color: rgba(224, 77, 77, 0.856);
+  display: inline-block;
+  text-align: left;
+  padding: 5px;
+  border-radius: 10px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(192, 181, 146);
+  color: white;
+}
+
+//MCQ box
+.mcq-card{
+  width: 20%;
+  display: inline-block;
+  text-align: left;
+  padding: 5px;
+  border-radius: 10px;
+  border-width: 3px;
+  border-style: solid;
+  color: rgb(0, 0, 0);
+  margin: 2px;
+}
+
+.default{
+  background-color: rgba(236, 200, 147, 0.856);
+  border-color: rgb(192, 181, 146);
+}
+
+.success{
+  background-color: rgba(147, 236, 169, 0.856);
+  border-color: rgb(154, 192, 146);
+}
+
+.info{
+  background-color: rgba(147, 208, 236, 0.856);
+  border-color: rgb(146, 147, 192);
+}
+
+
+
+.note-card-marging-free-light{
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.856);
+  display: inline-block;
+  text-align: left;
+  padding: 5px;
+  border-radius: 10px;
+  border-width: 3px;
+}
+
+.mcq-answer:hover{
+  background-color: rgba(207, 243, 193, 0.856);
+}
+
+.note-card-marging-free-light-selected{
+  width: 100%;
+  background-color: rgba(207, 243, 193, 0.856);
+  display: inline-block;
+  text-align: left;
+  padding:5px;
+  border-radius: 10px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(189, 181, 134);
+}
+
+
+@media screen and (max-width: 1100px) {
+  .mcq-card{
+    width: 30%;
+  }
+}
+
+.card-button{
+  margin-left: 2%;
+  margin-right: 2%;
+  background-color: rgba(190, 44, 248, 0.904);
+  font-size: 20px;
+  padding: 15px;
+  border-radius: 7px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+  cursor: pointer;
+  border-width: 1px;
+  border-style: solid;
+  color:rgb(0, 0, 0);
+  text-shadow: 2px 2px 5px rgb(139, 139, 139);
+}
+
+.card-button:hover{
+  background-color: rgb(255, 255, 254);
+  border-color: rgb(26, 25, 25);
+}
+
+.card-button-yellow{
+  margin-left: 2%;
+  margin-right: 2%;
+  background-color: rgb(194, 149, 207);
+  font-size: 15px;
+  padding: 15px;
+  border-radius: 7px;
+  background-image: linear-gradient(to right, rgb(186, 101, 219) , rgb(255, 255, 253));
+  text-align: center;
+  cursor: pointer;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(59, 53, 14);
+  color:rgb(0, 0, 0);
+  text-shadow: 2px 2px 5px rgb(139, 139, 139);
+}
+
+.card-button-yellow:hover{
+  background-image: linear-gradient(to right, rgb(151, 49, 211) , rgb(255, 255, 253));
+}
+
+.dashboard-card{
+  padding: 5px 5px 15px 5px;
+  background-color: rgba(190, 44, 248, 0.904);
+  border-radius: 10px;
+  width : 100%;
+  height : calc(100% - 5px);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.dashboard-card-header{
+  position: absolute;
+  margin:5px;
+  padding: 5px 15px;
+  background-color: rgba(27, 22, 2, 0.438);
+  border-radius: 10px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  float:right;
+  font-size: 20px;
+  right : 5px;
+}
+
+.dashboard-card-value{
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  font-weight: 400;
+}

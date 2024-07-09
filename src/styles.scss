@@ -1,0 +1,24 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+  font-family: "Poppins", sans-serif;
+}
+
+// // primeNG
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+
+@import url(./assets/Styles/colors.scss);
+
+
+@import url(./assets/Styles/layout.scss);
+@import url(./assets/Styles/menu.scss);
+@import url(./assets/Styles/card.scss);
+@import url(./assets/Styles/buttons.scss);
+@import url(./assets/Styles/customize.scss);
+@import url(./assets/Styles/text.scss);
+@import url(./assets/Styles/login.scss);
+@import url(./assets/Styles/table.scss);
+@import url(./assets/Styles/otp.scss);
+@import url(./assets/Styles/messages.scss);
+@import "primeicons/primeicons.css";

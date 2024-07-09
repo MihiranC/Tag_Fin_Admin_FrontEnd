@@ -1,0 +1,80 @@
+.message-content{
+  margin: 0px;
+  width: 100%;
+  border-radius: 5px;
+  padding: 0px;
+  padding-right: 10px;
+  //display: none;
+  max-height :0;
+  visibility: hidden;
+  transition: opacity 0.25s,max-height 0.5s, visibility 0.25s;
+}
+
+.message-title{
+  color: rgb(189, 1, 1);
+  font-size: large;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message-body{
+  color: rgb(0, 0, 0);
+  font-size: small;
+}
+
+.message-content.show {
+  opacity: 1;
+  visibility: visible;
+  max-height: 1000px;
+  margin: 3px;
+  padding: 4px;
+}
+
+.error-content{
+  background-color: rgba(249, 216, 216, 0.803);
+  border-left: 4px solid rgb(189, 1, 1);
+}
+
+.error-title{
+  color: rgb(189, 1, 1);
+}
+
+.success-content{
+  background-color: rgba(220, 249, 216, 0.803);
+  border-left: 4px solid rgb(7, 99, 36);
+}
+
+.success-title{
+  color: rgb(7, 99, 36);
+}
+
+.close{
+  cursor: pointer;
+}
+
+
+.dialog-screen{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: #060f3de1;
+  top:0;
+  left:0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  color: white;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dialog-screen .d-title{
+  z-index: 110;
+  font-size: 70px;
+}
+
+.d-content{
+  display: block;
+}

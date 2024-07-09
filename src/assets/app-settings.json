@@ -1,0 +1,28 @@
+{
+  "activeCollectionName": "WalletScienterEnv",
+  "collections": [
+
+    {
+      "name": "WalletScienterEnv",
+      "apiUrls": {
+
+        "key" : "zxcvbnmasdfghjkl",
+        "iv" : "1234567890123456",
+
+        "primaryCentralLoginApiUrl": "http://192.168.8.6:5906",
+        "primaryCentralApiUrl": "http://192.168.8.6:5905",
+        "primaryCommonApiUrl": "http://192.168.8.6:5907",
+        "primaryURL"  : "https://adminapi.tagteamengineering.lk", 
+        "reportURL" : "http://192.168.8.6:5103/CommonReport.aspx",
+        "HNB_PABX" : "https://callcenter.hnbfinance.lk/call.php",
+
+        "primaryMessageQueueApiUrl": "http://192.168.1.102:6504",
+        "primaryLendingApiUrl": "http://192.168.1.102:6505/",
+        "primaryLoanOriginationApiUrl": "http://192.168.1.102:6502/",
+        "primaryDocumentUploadApiUrl": "http://192.168.1.102:6506",
+        "primaryWorkflowApiUrl": "http://192.168.1.102:6507"
+      }
+    }
+
+  ]
+}

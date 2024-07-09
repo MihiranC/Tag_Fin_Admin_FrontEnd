@@ -1,0 +1,194 @@
+<!-- added with users -->
+
+<div class="main-card-container">
+  <app-messages></app-messages>
+  <div class="main-card-title n-text-primary lg">Fill User Details</div>
+  <form [formGroup]="UserForm!" (submit)="onSubmit()">
+    <div class="row" style="display: none;">
+      <!-- <div class="col-md-8">
+        <mat-form-field class="w-100">
+          <mat-label>User ID</mat-label>
+          <input matInput type="text" formControlName="userID">
+        </mat-form-field>
+      </div> -->
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+
+        <div class="p-field p-fluid">
+          <label>User Name</label>
+          <input pInputText id="userName"  type="text" formControlName="username" required [readonly]="this.readOnly">
+        </div>
+        
+      </div>
+      <div class="col-md-4">
+        <div class="p-field p-fluid">
+          <label>Mobile Number</label>
+          <p-inputMask type="text" formControlName="mobileNo" mask="9999999999"/>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="p-field p-fluid">
+            <label>E mail Address</label>
+          <input pInputText type="email" formControlName="email" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="p-field p-fluid">
+          <label>First Name</label>
+          <input pInputText type="text" formControlName="firstName" required>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="p-field p-fluid">
+          <label>Last Name</label>
+          <input pInputText type="text" formControlName="lastName" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="p-field p-fluid">
+          <label>Address Line 01</label>
+          <input pInputText type="text" formControlName="addressLine1" required>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="p-field p-fluid">
+          <label>Address Line 02</label>
+          <input pInputText type="text" formControlName="addressLine2" >
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="p-field p-fluid">
+          <label>Address Line 03</label>
+          <input pInputText type="text" formControlName="addressLine3">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="p-field p-fluid">
+          <label>Address Line 04</label>
+          <input pInputText type="text" formControlName="addressLine4">
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-4">
+
+      </div>
+      <div class="col-md-4">
+
+      </div>
+      <div class="col-md-4">
+        <div class="d-flex justify-content-end">
+          
+            
+            <button type="submit" class="primary-buttons p-button-green" pButton pRipple
+            [disabled]="UserForm?.invalid">
+            <span>{{OperationBtnText}}</span>
+            </button>
+
+            <button type="button" class="primary-buttons p-button-yellow" pButton pRipple
+            (click)="clearForm()">
+            <span>Clear</span>
+            </button>
+
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>  
+
+<br>
+
+<div class="main-card-container">
+  <div class="main-card-title n-text-primary lg">Existing Users</div>
+  <p-table 
+  #dt2
+      [value]="Users" 
+      styleClass="p-datatable-striped p-datatable-sm" 
+      [tableStyle]="{'min-width': '50rem'}"
+      [paginator]="true"
+      [rows]="5"
+      [rowsPerPageOptions]="[5, 10, 20]"
+      [globalFilterFields]="['firstName', 'lastName']">
+          <ng-template pTemplate="header">
+              <tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Mobile Number</th>
+                  <th>Email Address</th>
+                  <th style="width: 5rem"></th>
+                  <th style="width: 5rem"></th>
+              </tr>
+              <tr>
+                  <th>
+                      <p-columnFilter 
+                          type="text"
+                          field="firstName" 
+                          placeholder="Search by name" 
+                          ariaLabel="Filter Name" />
+                  </th>
+                  <th>
+                      <p-columnFilter 
+                          type="text"
+                          field="lastName"
+                          placeholder="Search by country" 
+                          ariaLabel="Filter Country" />
+                  </th>
+                  <th>
+                      <p-columnFilter 
+                          type="text"
+                          field="mobileNo"
+                          placeholder="Search by country" 
+                          ariaLabel="Filter Country" />
+                  </th>
+                  <th>
+                      <p-columnFilter 
+                          type="text"
+                          field="email"
+                          placeholder="Search by country" 
+                          ariaLabel="Filter Country" />
+                  </th>
+                  <th style="width: 5rem"></th>
+                  <th style="width: 5rem"></th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-user>
+              <tr>
+                  <td>{{user.firstName}}</td>
+                  <td>{{user.lastName}}</td>
+                  <td>{{user.mobileNo}}</td>
+                  <td>{{user.email}}</td>
+                  <td>
+                    <button 
+                        type="button" 
+                        pButton 
+                        pRipple 
+                        icon="pi pi-file-edit" 
+                        (click)="selectDataToForm(user)">
+                    </button>
+                  </td>
+                  <td>  
+                    <button 
+                        type="button" 
+                        pButton 
+                        pRipple 
+                        icon="pi pi-trash"
+                        (click)="confirmDialog(user)">
+                    </button>
+                  </td>
+              </tr>
+          </ng-template>
+  </p-table>
+</div>

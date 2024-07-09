@@ -1,0 +1,43 @@
+<div class="message-content error-content">
+  <div class="message-title error-title">
+    oops<span class="close" (click)="close('error-content')">x</span>
+  </div>
+  <div class="message-body">
+    {{contentBody}}
+  </div>
+</div>
+
+<div class="message-content success-content">
+  <div class="message-title success-title">
+    done<span class="close" (click)="close('success-content')">x</span>
+  </div>
+  <div class="message-body">
+    {{contentBody}}
+  </div>
+</div>
+
+<div class="message-content warning-content">
+  <div class="message-title warning-title">
+    worning<span class="close" (click)="close('warning-content')">x</span>
+  </div>
+  <div class="message-body">
+    {{contentBody}}
+  </div>
+</div>
+
+
+@if(isSessionexpired){
+<div class="dialog-screen">
+  <div class="d-title">
+    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+  </div>
+  <div style="font-size: x-large;">
+    Your session is expired
+  </div>
+  <div>
+    you have to log again to the system
+  </div>
+  <br>
+  <button (click)="confirm()" type="button" class="p-button-green-sm" pButton pRipple label="Ok"></button>
+</div>
+}

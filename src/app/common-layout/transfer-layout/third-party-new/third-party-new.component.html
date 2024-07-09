@@ -1,0 +1,462 @@
+@if(!otpshow){
+<app-messages></app-messages>
+}
+<div class="row">
+  <div class="col-md-8">
+    <p-steps
+      [model]="items"
+      [readonly]="true"
+      [activeIndex]="activeIndex"
+      (activeIndexChange)="onActiveIndexChange($event)"
+      styleClass="custom-steps"
+    ></p-steps>
+  </div>
+</div>
+
+@if(activeIndex==0){
+<div class="transfer-step">
+  <!-- info -->
+  <form [formGroup]="TransferFormGroup!" (submit)="Transfer()">
+    <div class="row">
+      <div class="col-md-4 n-text-primary">
+        <div class="p-field p-fluid">
+          <label for="fromAccount">From : Account</label>
+          <span>
+            <p-dropdown
+              [options]="AccountNumbers"
+              optionLabel="AccountNo"
+              [showClear]="true"
+              optionValue="AccountNo"
+              [filter]="true"
+              placeholder="Select a Account"
+              formControlName="fromAccount"
+              (onChange)="showAccountDetails($event.value)"
+            ></p-dropdown>
+          </span>
+        </div>
+        <div class="p-field p-fluid">
+          <label for="userName">Bank</label>
+          <span>
+            <p-dropdown
+              [options]="Banks"
+              optionLabel="bankName"
+              optionValue="bankCode"
+              [showClear]="true"
+              [filter]="true"
+              placeholder="Select a Bank"
+              (onChange)="getBankBranch($event.value)"
+              formControlName="bank"
+            ></p-dropdown>
+          </span>
+        </div>
+        <div class="p-field p-fluid">
+          <label for="password">Branch</label>
+          <span>
+            <p-dropdown
+              [options]="BankBranches"
+              optionLabel="bankBranchName"
+              optionValue="bankBranchCode"
+              [filter]="true"
+              [showClear]="true"
+              placeholder="Select a Bank Branch"
+              formControlName="branch"
+            ></p-dropdown>
+          </span>
+        </div>
+        <div class="p-field p-fluid">
+          <label for="amount">Account No</label>
+          <span>
+            <input
+              id="accountno"
+              type="text"
+              pInputText
+              formControlName="accountno"
+              required
+            />
+          </span>
+        </div>
+        <div class="p-field p-fluid">
+          <label for="amount">Account Name</label>
+          <span>
+            <input
+              id="accountname"
+              type="text"
+              pInputText
+              formControlName="accountname"
+              required
+            />
+          </span>
+        </div>
+      </div>
+      <div class="col-md-3 n-text-primary">
+        <div class="p-field p-fluid">
+          <label for="amount">Amount</label>
+          <span>
+            <p-inputNumber
+              id="amount"
+              type="text"
+              pInputText
+              formControlName="amount"
+              inputId="locale-us"
+              mode="decimal"
+              locale="en-US"
+              [minFractionDigits]="2"
+            >
+            </p-inputNumber>
+          </span>
+        </div>
+        <div class="p-field p-fluid">
+          <label for="confirmAmount">Confirm Amount</label>
+          <span>
+            <p-inputNumber
+              id="confirmAmount"
+              type="text"
+              pInputText
+              formControlName="confirmAmount"
+              inputId="locale-us"
+              mode="decimal"
+              locale="en-US"
+              [minFractionDigits]="2"
+            >
+            </p-inputNumber>
+          </span>
+        </div>
+        <div class="p-field p-fluid">
+          <label for="remarks">Remarks</label>
+          <span>
+            <input
+              id="remarks"
+              type="text"
+              pInputText
+              formControlName="remarks"
+              required
+            />
+          </span>
+        </div>
+        <!-- <div class="p-field p-fluid" style="padding-top: 5px;">
+              <label for="amount">Save as a payee</label>&nbsp;
+              <span >
+                <p-checkbox [binary]="true" (onChange)="onCheckboxChange($event)"></p-checkbox>
+              </span>
+            </div>
+    
+            <div class="p-field p-fluid">
+              <label for="amount">Nick Name</label>
+              <span>
+                <input id="nickname" type="text" pInputText formControlName="nickname" required />
+              </span>
+            </div> -->
+        <div
+          style="
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding-top: 10px;
+          "
+        >
+          <button
+            [disabled]="TransferFormGroup!.invalid"
+            style="width: 100%"
+            type="submit"
+            class="p-button-green"
+            pButton
+            pRipple
+            label="Proceed"
+          ></button>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="main-card-container">
+          <div class="main-card-title">
+            Savings Account : {{ selectedAccountNo }}
+          </div>
+          <div class="main-card-body">
+            <table style="width: 100%">
+              <tbody>
+                <tr>
+                  <td style="width: 50%">
+                    <div class="main-card-body-title">Balance</div>
+                  </td>
+                  <td style="width: 50%">
+                    <span class="card-disabled">Rs</span>
+                    <span class="card-amount">
+                      {{ selectedAccountNoBalance }}
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">
+                    <div class="main-card-body-title">Available Balance</div>
+                  </td>
+                  <td style="width: 50%">
+                    <span class="card-disabled">Rs</span>
+                    <span class="card-amount">
+                      {{ selectedAccountNoAvalBalance }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+}@else if(activeIndex==1){
+<div class="transfer-step">
+  <!-- confirmation -->
+  <div class="row">
+    <div class="col-md-12 n-text-primary xlg" style="text-align: center">
+      Rs.{{ InsertTransfer?.Amount }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12" style="padding: 0px 10%">
+      <table class="note-table">
+        <tbody>
+          <tr>
+            <td class="title">From</td>
+            <td class="title">Receiptent</td>
+          </tr>
+          <tr>
+            <td class="description">{{ InsertTransfer?.TransferAccountNo }}</td>
+            <td class="description">{{ InsertTransfer?.ReceiverAccountNo }}</td>
+          </tr>
+          <tr>
+            <td class="title">Bank</td>
+            <td class="title">Branch</td>
+          </tr>
+          <tr>
+            <td class="description">{{ InsertTransfer?.BankName }}</td>
+            <td class="description">{{ InsertTransfer?.BankBranchName }}</td>
+          </tr>
+          <tr>
+            <td class="title">Remark</td>
+            <td class="title"></td>
+          </tr>
+          <tr>
+            <td class="description">{{ InsertTransfer?.Narration }}</td>
+            <td class="description"></td>
+          </tr>
+        </tbody>
+      </table>
+      <div
+        style="
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          padding-top: 10px;
+        "
+      >
+        <button
+          (click)="okToProceed()"
+          type="button"
+          class="p-button-green"
+          pButton
+          pRipple
+          label="Ok to proceed"
+        ></button>
+        <button
+          (click)="goBackToInfo()"
+          type="button"
+          class="p-button-blue-sm"
+          pButton
+          pRipple
+          label="Go Back"
+        ></button>
+      </div>
+    </div>
+  </div>
+  @if(otpshow){
+  <div class="otpscreen">
+    <div class="otptitle">OTP</div>
+    <div style="width: 300px">
+      <app-messages></app-messages>
+      <br />
+    </div>
+    <div>Enter the one time password shared to</div>
+    <div>+94717718910</div>
+    <br />
+    <div>
+      <input type="text" pInputText #inputOTP />
+    </div>
+    <br />
+    <button
+      (click)="processPayment(inputOTP.value)"
+      type="button"
+      class="p-button-green-sm"
+      pButton
+      pRipple
+      label="Submit"
+    ></button>
+    <div class="timebox">00:26</div>
+    <div>
+      <span>
+        <button
+          (click)="Confirm()"
+          type="button"
+          class="p-button-blue-sm"
+          pButton
+          pRipple
+          label="Re-send OTP"
+        ></button>
+      </span>
+      <span>
+        <button
+          (click)="goBackFromOTP()"
+          type="button"
+          class="p-button-blue-sm"
+          pButton
+          pRipple
+          label="Go Back"
+        ></button>
+      </span>
+    </div>
+  </div>
+  }
+</div>
+}@else {
+<div class="transfer-step">
+  <!-- receipt -->
+  <div class="row">
+    <div class="col-md-12 n-text-primary xlg" style="text-align: center">
+      Rs.{{ InsertTransfer?.Amount }}
+      <span>
+        <img
+          src="./../../../../assets/Imgaes/icons/success.png"
+          style="height: 25px; margin-top: -5px"
+          alt="Image"
+        />
+      </span>
+      <span class="n-text-lightgreen">&nbsp;Success</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12" style="padding: 0px 10%">
+      <table class="note-table">
+        <tbody>
+          <tr>
+            <td class="title">From</td>
+            <td class="title">Receiptent</td>
+          </tr>
+          <tr>
+            <td class="description">{{ InsertTransfer?.TransferAccountNo }}</td>
+            <td class="description">{{ InsertTransfer?.ReceiverAccountNo }}</td>
+          </tr>
+          <tr>
+            <td class="title">Bank</td>
+            <td class="title">Branch</td>
+          </tr>
+          <tr>
+            <td class="description">{{ InsertTransfer?.BankName }}</td>
+            <td class="description">{{ InsertTransfer?.BankBranchName }}</td>
+          </tr>
+          <tr>
+            <td class="title">Remark</td>
+            <td class="title"></td>
+          </tr>
+          <tr>
+            <td class="description">{{ InsertTransfer?.Narration }}</td>
+            <td class="description"></td>
+          </tr>
+        </tbody>
+      </table>
+      @if(isSavedPayee == false){
+      <div
+        style="
+          width: 100%;
+          padding-top: 10px;
+          align-content: center;
+          text-align: center;
+        "
+      >
+        <div class="p-field p-fluid n-text-primary" style="padding-bottom: 5px">
+          <label for="amount">Save as a payee</label>&nbsp;
+          <span>
+            <p-checkbox
+              [binary]="true"
+              (onChange)="onCheckboxChange($event)"
+            ></p-checkbox>
+          </span>
+        </div>
+        @if(isSaveAsPayee==true){
+        <div>
+          <div class="p-field p-fluid">
+            <span>
+              <input
+                id="nickname"
+                style="width: 300px"
+                type="text"
+                pInputText
+                placeholder="Type a nick name"
+                #nickname
+              />
+            </span>
+          </div>
+          <div
+            style="
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              padding-top: 10px;
+            "
+          >
+            <button
+              type="button"
+              class="p-button-green"
+              (click)="savePayee(nickname.value)"
+              pButton
+              pRipple
+              label="Save payee"
+            ></button>
+          </div>
+        </div>
+        }
+      </div>
+      }
+      <div
+        style="
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          padding-top: 10px;
+        "
+      >
+        <button
+          (click)="Confirm()"
+          type="button"
+          class="p-button-blue-shade"
+          pButton
+          pRipple
+        >
+          <span>
+            <img
+              src="./../../../../assets/Imgaes/icons/download.png"
+              style="height: 10px; margin-top: -5px"
+              alt="Image"
+            />
+          </span>
+          <span>&nbsp;Download</span>
+        </button>
+        <button
+          (click)="Confirm()"
+          type="button"
+          class="p-button-blue-shade"
+          pButton
+          pRipple
+        >
+          <span>
+            <img
+              src="./../../../../assets/Imgaes/icons/print.png"
+              style="height: 10px; margin-top: -5px"
+              alt="Image"
+            />
+          </span>
+          <span>&nbsp;Print</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+}

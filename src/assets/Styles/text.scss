@@ -1,0 +1,119 @@
+
+@import 'colors.scss';
+.n-text-title{
+    color: black;
+    font-weight: 800;
+}
+
+.n-text-disabled{
+    color: rgb(131, 128, 128);
+    font-weight: 100;
+}
+
+.n-text-title-lg{
+    color: black;
+    font-weight: 800;
+    font-size: large;
+}
+
+.n-text-primary{
+    color: $primary-text-color;
+    font-weight: 800;
+}
+
+.n-text-xlarge-white{
+    color: #ffffff;
+    font-weight: 400;
+    font-size: x-large;
+}
+
+.n-text-large-white{
+    color: #ffffff;
+    font-weight: 400;
+    font-size: large;
+}
+
+.n-text-large-white-b400{
+    color: #ffffff;
+    font-size: large;
+    font-weight: lighter;
+}
+
+.n-text-medium-black{
+    color: #000000;
+    font-weight: 400;
+    font-size: medium;
+}
+
+.n-text-small-black{
+    color: #000000;
+    font-weight: 400;
+    font-size: small;
+}
+
+.n-text-small-black-b400{
+    color: #000000;
+    font-size: small;
+    font-weight: lighter;
+}
+
+.mi-font{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.n-text-lightblue{
+    color: #007BC2;
+    font-weight: 800;
+}
+
+.n-text-lightgreen{
+  color: #6DC100;
+  font-weight: 400;
+}
+
+
+//sizs
+.sm{
+  font-size: small;
+}
+
+.smlr{
+  font-size: smaller;
+}
+
+.md{
+  font-size: medium;
+}
+
+.lg{
+  font-size: large;
+}
+
+.lgr{
+  font-size: larger;
+}
+
+.xlg{
+  font-size: x-large;
+}
+
+.title-nav-main{
+  width: 100%;
+  color: white;
+  font-size: xx-large;
+  font-weight: 800;
+  letter-spacing: 0.5cm;
+}
+
+.title-footer-main{
+  color: white;
+  font-size: large;
+  font-weight: 400;
+  letter-spacing: 0.5cm;
+}
+
+@media (max-width: 760px) {
+  .title-nav-main{
+    letter-spacing: 0.1cm;
+  }
+}

@@ -1,0 +1,76 @@
+.main-card-container{
+    width:100%;
+    border-radius: 10px;
+    margin:2px;
+    background-color: #ffffff;
+    padding: 10px;
+}
+
+.main-card-title{
+    margin-left: 3px;
+    padding-bottom: 5px;
+}
+
+.main-card-body{
+    font-size: small;
+}
+
+.main-card-body-title{
+    font-weight: 800;
+}
+
+.card-amount{
+    font-size: x-large;
+    color:#6DC100;
+    text-align: right;
+}
+
+.card-disabled{
+    font-size: small;
+    color:#7C8DA6;
+}
+
+.note-card{
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    border-top: 2px solid #7C8DA6;
+    font-size: smaller;
+}
+
+.font-ash{
+    color: #7C8DA6;
+}
+
+@media (max-width: 1200px) {
+	.card-amount{
+        font-size: small;
+    }
+}
+
+.custom-tab-header{
+  height: 40px;
+}
+
+.custom-tab{
+  display: inline-block;
+  margin-right: 20px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.tab-selected{
+  background-image: url('./../Images/others/underline.png');
+  background-size: 120px;
+  background-position: center;
+  background-position-y: 15px;
+  background-repeat: no-repeat;
+ }
+
+ .custom-tab:hover{
+  background-image: url('./../Images/others/underline.png');
+  background-size: 120px;
+  background-position: center;
+  background-position-y: 15px;
+  background-repeat: no-repeat;
+}

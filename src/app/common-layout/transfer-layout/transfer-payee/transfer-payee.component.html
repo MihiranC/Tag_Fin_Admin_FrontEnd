@@ -1,0 +1,109 @@
+<div class="row">
+  <app-messages></app-messages>
+  <p-confirmDialog></p-confirmDialog>
+  <div class="col-md-4 n-text-primary">
+    <div class="n-text-lightblue">
+      Add new payee
+    </div>
+    <form [formGroup]="payeeGroup!" (submit)="savePayee()">
+      <div class="p-field p-fluid">
+        <label for="userName">Bank</label>
+        <span>
+          <p-dropdown [options]="Banks" optionLabel="bankName" optionValue="bankCode" [showClear]="true" [filter]="true"
+            placeholder="Select a Bank" (onChange)="getBankBranch($event.value)" formControlName="bank"></p-dropdown>
+
+
+        </span>
+      </div>
+      <div class="p-field p-fluid">
+        <label for="password">Branch</label>
+        <span>
+          <p-dropdown [options]="BankBranches" optionLabel="bankBranchName" optionValue="bankBranchCode" [filter]="true"
+            [showClear]="true" placeholder="Select a Bank Branch" formControlName="branch"></p-dropdown>
+
+        </span>
+      </div>
+      <div class="p-field p-fluid">
+        <label for="amount">Account No</label>
+        <span>
+          <input id="accountno" type="text" pInputText formControlName="accountno" required />
+        </span>
+      </div>
+      <div class="p-field p-fluid">
+        <label for="amount">Account Name</label>
+        <span>
+          <input id="accountname" type="text" pInputText formControlName="accountname" required />
+        </span>
+      </div>
+      <div class="p-field p-fluid">
+        <label for="amount">Nick Name</label>
+        <span>
+          <input id="nickname" type="text" pInputText formControlName="nickname" required />
+        </span>
+      </div>
+      <div style="
+              width: 100%;
+              display: flex;
+              justify-content: right;
+              padding-top: 10px;
+            ">
+        <button type="submit" class="p-button-green" pButton pRipple label="{{OperationBtnText}}"
+          [disabled]="payeeGroup?.invalid"></button>
+        <button type="button" (click)="clearForm()" class="p-button-yellow" pButton pRipple label="Clear"></button>
+      </div>
+
+    </form>
+  </div>
+  <div class="col-md-8">
+    <div class="row" style="padding-bottom: 3px;">
+      <div class="n-text-title-lg col-md-6">
+        Registered Payees
+      </div>
+      <div class="col-md-6 filter-text">
+        <div class="p-input-icon-left" style="width: 100%">
+          <i class="pi pi-search"></i>
+          <input type="text" pInputText style="width: 100%" (input)="filterPayee($event)" placeholder="Search a payee" />
+        </div>
+      </div>
+    </div>
+    <div style="min-height: 400px;">
+      @for (payee of paginatedPayees; track payee.payeeID; let index = $index ) {
+      <div class="note-card">
+        <div class="n-text-lightblue">
+          {{payee.payeeNickName}}
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            Acc No : {{payee.payeeAccountNo}}
+          </div>
+          <div class="col-md-6">
+            Acc Name : {{payee.payeeName}}
+          </div>
+          <div class="col-md-6">
+            Bank : {{payee.bankName}}
+          </div>
+          <div class="col-md-6">
+            Branch : {{payee.bankBranchName}}
+          </div>
+        </div>
+        <div style="width: 100%; display: flex; justify-content: flex-end;">
+          <button (click)="editPayee(payee)" type="button" class="p-button-blue-shade-icon" pButton pRipple>
+            <i class="pi pi-user-edit" style="font-size: 1rem"></i>
+          </button>
+          <button (click)="deleteConfirmation($event,payee)" type="button" class="p-button-red-shade-icon" pButton
+            pRipple>
+            <i class="pi pi-trash" style="font-size: 1rem"></i>
+          </button>
+        </div>
+      </div>
+
+      } @empty {
+      No payee found
+      }
+    </div>
+    <p-paginator [rows]="4" [totalRecords]="totalPayees" [rowsPerPageOptions]="[4,8,12]"
+      (onPageChange)="onPageChange($event)">
+    </p-paginator>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+.note-table {
+  border: 5px solid white;
+  border-collapse: collapse;
+  width: 100%;
+  border-spacing: 0;
+  padding : 80px;
+}
+
+.note-table  td {
+  border: 1px solid black;
+  padding: 8px;
+  height: 30px;
+}
+
+.note-table  td.title {
+  font-size: xx-small;
+  padding-bottom: 1px;
+  vertical-align: bottom;
+  color: #060F3D;
+  width: 50%;
+  border-top: none;
+  height: 10px;
+  padding-top: 0px;
+}
+
+.note-table  td.description {
+  padding-top: 1px;
+  font-size: small;
+  vertical-align: top;
+  color: #060F3D;
+  font-weight: 800;
+  width: 50%;
+  border-bottom: none;
+}
+

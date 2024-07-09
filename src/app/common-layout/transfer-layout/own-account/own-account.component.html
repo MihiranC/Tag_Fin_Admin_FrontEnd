@@ -1,0 +1,348 @@
+@if(!otpshow){
+<app-messages></app-messages>
+}
+<div class="row">
+  <div class="col-md-8">
+    <p-steps
+      [model]="items"
+      [readonly]="true"
+      [activeIndex]="activeIndex"
+      (activeIndexChange)="onActiveIndexChange($event)"
+      styleClass="custom-steps"
+    ></p-steps>
+  </div>
+</div>
+
+@if(activeIndex==0){
+<div class="transfer-step">
+  <!-- info -->
+  <div class="row">
+    <div class="col-md-4 n-text-primary">
+      <form [formGroup]="TransferFormGroup!" (submit)="Transfer()">
+        <div class="p-field p-fluid">
+          <label for="fromAccount">From : Account</label>
+          <span>
+            <p-dropdown
+              [options]="AccountNumbers"
+              optionLabel="AccountNo"
+              [showClear]="true"
+              optionValue="AccountNo"
+              placeholder="Select a Account"
+              formControlName="fromAccount"
+              (onChange)="showAccountDetails($event.value)"
+              [showClear]="true" 
+              [filter]="true"
+            ></p-dropdown>
+          </span>
+        </div>
+        <div class="p-field p-fluid">
+          <label for="sendAccount">Send to : Account</label>
+          <span>
+            <p-dropdown
+              [options]="AccountNumbers"
+              optionLabel="AccountNo"
+              [showClear]="true"
+              optionValue="AccountNo"
+              placeholder="Select a Account"
+              formControlName="sendAccount"
+              [showClear]="true" 
+              [filter]="true"
+            ></p-dropdown>
+          </span>
+        </div>
+        <div class="p-field p-fluid">
+          <label for="amount">Amount</label>
+          <span>
+            <p-inputNumber
+              id="amount"
+              type="text"
+              pInputText
+              formControlName="amount"
+              inputId="locale-us"
+              mode="decimal"
+              locale="en-US"
+              [minFractionDigits]="2"
+            >
+            </p-inputNumber>
+          </span>
+        </div>
+        <div class="p-field p-fluid">
+          <label for="confirmAmount">Confirm Amount</label>
+          <span>
+            <p-inputNumber
+              id="confirmAmount"
+              type="text"
+              pInputText
+              formControlName="confirmAmount"
+              inputId="locale-us"
+              mode="decimal"
+              locale="en-US"
+              [minFractionDigits]="2"
+            >
+            </p-inputNumber>
+          </span>
+        </div>
+        <div class="p-field p-fluid">
+          <label for="remarks">Remarks</label>
+          <span>
+            <input
+              id="remarks"
+              type="text"
+              pInputText
+              formControlName="remarks"
+              required
+            />
+          </span>
+        </div>
+        <div
+          style="
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding-top: 10px;
+          "
+        >
+          <button
+            [disabled]="TransferFormGroup!.invalid"
+            style="width: 100%"
+            type="submit"
+            class="p-button-green"
+            pButton
+            pRipple
+            label="Transfer now"
+          ></button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-3"></div>
+   
+    <div class="col-md-5">
+        <div class="main-card-container">
+          <div class="main-card-title">
+            Savings Account : {{selectedAccountNo}}
+          </div>
+          <div class="main-card-body">
+            <table style="width: 100%;">
+              <tbody>
+                <tr>
+                  <td style="width: 50%;">
+                    <div class="main-card-body-title">
+                      Balance
+                    </div>
+                  </td>
+                  <td style="width: 50%;">
+                    <span class="card-disabled">Rs</span>
+                    <span class="card-amount">
+                      {{selectedAccountNoBalance}}
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50%;">
+                    <div class="main-card-body-title">
+                      Available Balance
+                    </div>
+                  </td>
+                  <td style="width: 50%;">
+                    <span class="card-disabled">Rs</span>
+                    <span class="card-amount">
+                      {{selectedAccountNoAvalBalance}}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+  </div>
+</div>
+}@else if(activeIndex==1){
+<div class="transfer-step">
+  <!-- confirmation -->
+  <div class="row">
+    <div class="col-md-12 n-text-primary xlg" style="text-align: center">
+      Rs.{{ InsertTransfer?.Amount }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12" style="padding: 0px 10%">
+      <table class="note-table">
+        <tbody>
+          <tr>
+            <td class="title">From</td>
+            <td class="title">Receiptent</td>
+          </tr>
+          <tr>
+            <td class="description">{{ InsertTransfer?.TransferAccountNo }}</td>
+            <td class="description">{{ InsertTransfer?.ReceiverAccountNo }}</td>
+          </tr>
+          <tr>
+            <td class="title">Amount</td>
+            <td class="title">Remark</td>
+          </tr>
+          <tr>
+            <td class="description">{{ InsertTransfer?.Amount }}</td>
+            <td class="description">{{ InsertTransfer?.Narration }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div
+        style="
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          padding-top: 10px;
+        "
+      >
+        <button
+          (click)="okToProceed()"
+          type="button"
+          class="p-button-green"
+          pButton
+          pRipple
+          label="Ok to proceed"
+        ></button>
+        <button
+          (click)="goBackToInfo()"
+          type="button"
+          class="p-button-blue-sm"
+          pButton
+          pRipple
+          label="Go Back"
+        ></button>
+      </div>
+    </div>
+  </div>
+  @if(otpshow){
+  <div class="otpscreen">
+    <div class="otptitle">OTP</div>
+    <div style="width: 300px">
+      <app-messages></app-messages>
+      <br />
+    </div>
+    <div>Enter the one time password shared to</div>
+    <div>+94717718910</div>
+    <br />
+    <div>
+      <input type="text" pInputText #inputOTP />
+    </div>
+    <br />
+    <button
+      (click)="processPayment(inputOTP.value)"
+      type="button"
+      class="p-button-green-sm"
+      pButton
+      pRipple
+      label="Submit"
+    ></button>
+    <div class="timebox">00:26</div>
+    <div>
+      <span>
+        <button
+          (click)="ResendOTP()"
+          type="button"
+          class="p-button-blue-sm"
+          pButton
+          pRipple
+          label="Re-send OTP"
+        ></button>
+      </span>
+      <span>
+        <button
+          (click)="goBackFromOTP()"
+          type="button"
+          class="p-button-blue-sm"
+          pButton
+          pRipple
+          label="Go Back"
+        ></button>
+      </span>
+    </div>
+  </div>
+  }
+</div>
+}@else {
+<div class="transfer-step">
+  <!-- receipt -->
+  <div class="row">
+    <div class="col-md-12 n-text-primary xlg" style="text-align: center">
+      Rs.{{ InsertTransfer?.Amount }}
+      <span>
+        <img
+          src="./../../../../assets/Imgaes/icons/success.png"
+          style="height: 25px; margin-top: -5px"
+          alt="Image"
+        />
+      </span>
+      <span class="n-text-lightgreen">&nbsp;Success</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12" style="padding: 0px 10%">
+      <table class="note-table">
+        <tbody>
+          <tr>
+            <td class="title">From</td>
+            <td class="title">Receiptent</td>
+          </tr>
+          <tr>
+            <td class="description">{{ InsertTransfer?.TransferAccountNo }}</td>
+            <td class="description">{{ InsertTransfer?.ReceiverAccountNo }}</td>
+          </tr>
+          <tr>
+            <td class="title">Amount</td>
+            <td class="title">Remark</td>
+          </tr>
+          <tr>
+            <td class="description">{{ InsertTransfer?.Amount }}</td>
+            <td class="description">{{ InsertTransfer?.Narration }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div
+        style="
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          padding-top: 10px;
+        "
+      >
+        <button
+          (click)="Download()"
+          type="button"
+          class="p-button-blue-shade"
+          pButton
+          pRipple
+        >
+          <span>
+            <img
+              src="./../../../../assets/Imgaes/icons/download.png"
+              style="height: 10px; margin-top: -5px"
+              alt="Image"
+            />
+          </span>
+          <span>&nbsp;Download</span>
+        </button>
+        <button
+          (click)="Print()"
+          type="button"
+          class="p-button-blue-shade"
+          pButton
+          pRipple
+        >
+          <span>
+            <img
+              src="./../../../../assets/Imgaes/icons/print.png"
+              style="height: 10px; margin-top: -5px"
+              alt="Image"
+            />
+          </span>
+          <span>&nbsp;Print</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+}

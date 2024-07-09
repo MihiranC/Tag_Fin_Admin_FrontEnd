@@ -1,0 +1,59 @@
+@import 'colors.scss';
+
+.loginbg {
+  background-image: url(../Images/LogingBGs/financeBG.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 95vh;
+  width: 100%;
+  overflow: hidden;
+  transition: background-image 0.5s ease-in-out;
+}
+
+.container-fluid-login {
+  padding: 0px;
+  overflow: hidden;
+  flex-wrap: wrap;
+  background-color: rgb(207, 207, 207);
+}
+
+.login-form-div {
+  background-color: rgba(250, 249, 249, 0.689);
+  border-radius: 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  margin: 0px 10px;
+  padding: 10px;
+  padding-bottom: 25px;
+  position: relative;
+}
+
+.login-footer {
+  height: 5vh;
+  width: 100%;
+  color: white;
+  overflow: hidden;
+  background-color: $primary-color;
+  display: flex;            // Enables flexbox
+  justify-content: center;  // Centers horizontally
+  align-items: center;      // Centers vertically
+}
+
+.title-div{
+  width: 100%;
+  color: $primary-text-color;
+  font-size: large;
+  font-weight: 500;
+  text-align: center;
+  //margin: 0px 10px;
+  margin-top: 10vh;
+}
+
+.title-div-main{
+  width: 100%;
+  color: $primary-text-color;
+  font-size: xx-large;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: 0.5cm;
+  margin: 0px 10px;
+}

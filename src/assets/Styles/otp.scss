@@ -1,0 +1,46 @@
+.otpscreen{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: #060f3de1;
+  top:0;
+  left:0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  color: white;
+  flex-direction: column;
+  align-items: center;
+}
+
+.otpscreen .otptitle{
+  z-index: 110;
+  font-size: 70px;
+}
+
+.otpcontent{
+  display: block;
+}
+
+.otpscreen input{
+  background: rgba(0, 255, 255, 0) !important;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  color: white;
+  text-align: center;
+}
+
+.otpscreen .p-inputtext:enabled:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: none;
+  border-color: none;
+}
+
+.timebox{
+  width: 100px;
+  background-color: #007BC2;
+  text-align: center;
+  margin: 5px;
+}

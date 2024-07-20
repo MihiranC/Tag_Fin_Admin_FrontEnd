@@ -84,7 +84,7 @@ export class SubAccountCategoriesComponent {
         .subscribe({
           next: (data: any) => {
             if (data.code == "1000") {
-              this.messagesComponent!.showSuccess('Successfully inserted')
+              this.messagesComponent!.showSuccess('Successfully inserted. Code is '+data.data[0].code)
               this.clearForm();
             }
             else {

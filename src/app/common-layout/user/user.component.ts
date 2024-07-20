@@ -39,7 +39,7 @@ export class UserComponent {
   OperationBtnText: string = 'Save'
   userObject: Users = new Users()
   usersList: Users[] = [];
-  userID: number = 1;
+  userID: number = Number(sessionStorage.getItem('LoggedUserID')!);
   readOnly: boolean | undefined = false;
   updateData: UpdateData = new UpdateData()
 
@@ -86,7 +86,7 @@ export class UserComponent {
     this.userObject.email = this.UserForm!.value.email;
     this.userObject.roleCode = 'U';
     if (this.OperationBtnText == "Save") {
-      this.userObject.userID = -999;
+      this.userObject.userID = this.userID;
       this.userService.InsertUsers(this.userObject)
         .subscribe({
           next: (data: any) => {

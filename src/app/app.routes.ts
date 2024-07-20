@@ -28,6 +28,11 @@ export const routes: Routes = [
             title: 'EvoFin | Config Customers',
             path: 'ConfigCustomers', // child route path
             loadComponent:() => import('./common-layout/customer/customer.component').then(m=>m.CustomerComponent),
+          },
+          {
+            title: 'EvoFin | Accounts | Sub Account Categories',
+            path: 'SubAccountCategories', // child route path
+            loadComponent:() => import('./common-layout/sub-account-categories/sub-account-categories.component').then(m=>m.SubAccountCategoriesComponent),
           }
         ],
       },

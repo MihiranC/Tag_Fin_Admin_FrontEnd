@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { MessagesComponent } from '../../messages/messages.component';
 import { PrimeConfig } from '../../prime.config';
 import { CustomerSearchComponent } from '../CommonControllers/customer-search/customer-search.component';
@@ -20,6 +20,7 @@ export class CustomerComponent {
   mode: string = 'I'
   OperationBtnText: string = 'Save'
   readOnly: boolean | undefined = false;
+  searchHide: boolean | undefined = false;
   formData: any = {};
   CustomerForm: FormGroup | undefined;
   CustomerObj: Customer = new Customer()
@@ -62,24 +63,35 @@ export class CustomerComponent {
   @ViewChild(CustomerSearchComponent) customerSearchComponent: CustomerSearchComponent | undefined;
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.mode = params['mode'];
+      this.updateModeSettings();
+    });
 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.route.queryParams.subscribe(params => {
           this.mode = params['mode'];
-          if (this.mode == "U") {
-            this.readOnly = false;
-            this.OperationBtnText = "Update"
-          } else if (this.mode == "V") {
-            this.readOnly = true;
-          } else if (this.mode == "I") {
-            this.readOnly = false;
-            this.OperationBtnText = "Save"
-          }
-          this.clearForm();
+          this.updateModeSettings();
         });
       }
     });
+  }
+
+  updateModeSettings(): void {
+    if (this.mode == "U") {
+      this.readOnly = false;
+      this.OperationBtnText = "Update";
+      this.searchHide = false;
+    } else if (this.mode == "V") {
+      this.readOnly = true;
+      this.searchHide = false;
+    } else if (this.mode == "I") {
+      this.readOnly = false;
+      this.OperationBtnText = "Save";
+      this.searchHide = true;
+    }
+    this.clearForm();
   }
 
   onSubmit() {

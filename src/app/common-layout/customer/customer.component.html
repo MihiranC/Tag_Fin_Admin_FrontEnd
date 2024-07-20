@@ -8,7 +8,7 @@
                     <label>Code</label>
                     <div class="flex">
                         <input pInputText id="userName" type="text" formControlName="code" readonly="true">
-                        @if(mode!="I"){
+                        @if(!searchHide){
                         &nbsp;<app-customer-search (getSelected)="SelectCustomerFromSearch($event)"></app-customer-search>
                         }
                     </div>

@@ -35,4 +35,9 @@ export class AccountsService {
   DeleteSubAccCategory(data: SubAccCategories): Observable<any> {
     return this.HttpService.postData(data,'api/TagFin/Account/DeleteSubAccCategories',this.GlobalService.finApiUrl)
   }
+
+  SelectSubAccCategories(code: string, id: number): Observable<any> {
+    return this.HttpService.getData('api/TagFin/Account/SelectSubAccCategories', `code=${code}&id=${id}`,this.GlobalService.finApiUrl)
+  }
+
 }

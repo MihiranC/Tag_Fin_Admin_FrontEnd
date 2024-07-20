@@ -6,6 +6,7 @@ import { PrimeConfig } from '../../prime.config';
 import { MainAccCategories, SubAccCategories } from '../../Models/Accounts';
 import { AccountsService } from '../../Services/Accounts.service';
 import { UpdateData } from '../../Models/UpdateData';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-sub-account-categories',
@@ -18,6 +19,7 @@ export class SubAccountCategoriesComponent {
 
   @ViewChild(FormGroupDirective, { static: false }) UserFormDirective: FormGroupDirective | undefined
   @ViewChild(MessagesComponent) messagesComponent: MessagesComponent | undefined;
+  @ViewChild('dt2') dt2: Table | undefined;
 
   formData: any = {};
   SubAccountForm: FormGroup | undefined;
@@ -27,6 +29,7 @@ export class SubAccountCategoriesComponent {
   subAccCategory : SubAccCategories = new SubAccCategories();
   userid: number = Number(sessionStorage.getItem('LoggedUserID')!)
   updateData: UpdateData = new UpdateData()
+  subAccCategoryList : SubAccCategories[] = [];
 
 
   constructor(
@@ -45,6 +48,7 @@ export class SubAccountCategoriesComponent {
   ngOnInit(): void {
     this.CheckCodeIsEditable()
     this.selectMainAccCategories()
+    this.SelectExistingData()
   }
 
   async CheckCodeIsEditable(){
@@ -53,6 +57,7 @@ export class SubAccountCategoriesComponent {
 
   clearForm(){
     this.SubAccountForm?.reset();
+    this.OperationBtnText = "Save";
   }
 
   selectMainAccCategories(){
@@ -86,6 +91,7 @@ export class SubAccountCategoriesComponent {
             if (data.code == "1000") {
               this.messagesComponent!.showSuccess('Successfully inserted. Code is '+data.data[0].code)
               this.clearForm();
+              this.SelectExistingData()
             }
             else {
               this.messagesComponent!.showError(data.message);
@@ -108,6 +114,7 @@ export class SubAccountCategoriesComponent {
             if (data.code == "1000") {
               this.messagesComponent!.showSuccess('Successfully updated')
               this.clearForm();
+              this.SelectExistingData()
             }
             else {
               this.messagesComponent!.showError(data.description);
@@ -119,5 +126,61 @@ export class SubAccountCategoriesComponent {
         });
     }
 
+  }
+
+  selectToUpdate(subAccCategory : SubAccCategories){
+    this.SubAccountForm!.patchValue({
+      id: subAccCategory.id,
+      mainAccCode: subAccCategory.mainAccCode,
+      code: subAccCategory.code,
+      name: subAccCategory.name
+
+    });
+    this.updateData.oldData = this.SubAccountForm!.value;
+    this.OperationBtnText = "Update";
+  }
+
+  delete(subAccCategory : SubAccCategories){
+    this.subAccCategory = subAccCategory;
+    this.accountsService.DeleteSubAccCategory(this.subAccCategory)
+        .subscribe({
+          next: (data: any) => {
+            if (data.code == "1000") {
+              this.messagesComponent!.showSuccess('Successfully Deleted')
+              this.clearForm();
+              this.SelectExistingData()
+            }
+            else {
+              this.messagesComponent!.showError(data.message);
+            }
+          },
+          error: (error: any) => {
+            this.messagesComponent?.showError(error);
+          },
+        });
+  }
+
+  onFilterGlobal(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    if (this.dt2) {
+      this.dt2.filterGlobal(inputElement.value, 'contains');
+    }
+  }
+
+  SelectExistingData(){
+    this.accountsService.SelectSubAccCategories('',-999)
+    .subscribe({
+      next: (data: any) => {
+        if (data.code == "1000") {
+         this.subAccCategoryList = data.data
+        }
+        else {
+          this.messagesComponent!.showError(data.description);
+        }
+      },
+      error: (error: any) => {
+        this.messagesComponent?.showError(error);
+      },
+    });
   }
 }

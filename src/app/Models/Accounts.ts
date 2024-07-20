@@ -7,6 +7,7 @@ export class SubAccCategories{
     id : number | undefined;
     code : string | undefined;
     mainAccCode : string | undefined;
+    mainAccCategory : string | undefined;
     name : string | undefined;
     userId : number | undefined;
 }

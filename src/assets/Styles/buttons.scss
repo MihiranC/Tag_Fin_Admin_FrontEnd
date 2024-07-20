@@ -13,6 +13,18 @@ button {
     margin : 3px;
 }
 
+.p-button-red{
+  background-color: #c73030;  
+  background: #c73030;
+  border: 1px solid #c73030;
+}
+
+.p-button-red:hover{
+  background-color: #b11f1f;  
+  background: #b11f1f;
+  border: 1px solid #b11f1f;
+}
+
 .p-button-blue {
     padding: 5px 30px !important;
     border-radius: 20px;

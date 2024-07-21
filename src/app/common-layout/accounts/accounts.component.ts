@@ -100,10 +100,10 @@ export class AccountsComponent {
    onSubmit() {
     this.accounts.id = this.AccountForm!.value.id;
     this.accounts.code = this.AccountForm!.value.code;
-    this.accounts.subAccCode = this.AccountForm!.value.subAccCode.code;
+    this.accounts.subAccCode = this.AccountForm!.value.subAccCode;
     this.accounts.name = this.AccountForm!.value.name;
+    this.accounts.userId = this.userid;
     if (this.OperationBtnText == "Save") {
-      this.accounts.userId = this.userid;
       this.accountsService.InsertAccounts(this.accounts)
         .subscribe({
           next: (data: any) => {
@@ -123,7 +123,7 @@ export class AccountsComponent {
     }
     else {
 
-      this.updateData.newData = this.AccountForm!.value
+      this.updateData.newData =  this.accounts
       this.updateData.userID = this.userid
 
       console.log('updateData',this.updateData)
@@ -148,11 +148,13 @@ export class AccountsComponent {
   }
 
   selectToUpdate(accounts : Accounts){
+    this.selectSubAccCategoriesForMainAccCategories(accounts.mainAccCode!)
     this.AccountForm!.patchValue({
       id: accounts.id,
+      mainAccCode: accounts.mainAccCode,
       subAccCode: accounts.subAccCode,
       code: accounts.code,
-      name: accounts.name
+      name: accounts.accName
 
     });
     this.updateData.oldData = this.AccountForm!.value;
@@ -160,8 +162,7 @@ export class AccountsComponent {
   }
 
   delete(accounts : Accounts){
-    this.accounts = this.accounts;
-    this.accountsService.DeleteAccounts(this.accounts)
+    this.accountsService.DeleteAccounts(accounts)
         .subscribe({
           next: (data: any) => {
             if (data.code == "1000") {
@@ -191,6 +192,7 @@ export class AccountsComponent {
     .subscribe({
       next: (data: any) => {
         if (data.code == "1000") {
+          console.log('this.AccList',data.data)
          this.AccList = data.data
         }
         else {

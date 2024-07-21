@@ -96,6 +96,7 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
+                <th>Account Code</th>
                 <th>Main Account Category</th>
                 <th>Sub Account Category</th>
                 <th>Account Name</th>
@@ -114,19 +115,24 @@
                         ariaLabel="Filter Sub Account Name" />
                 </th>
                 <th>
+                    <p-columnFilter type="text" field="lastName" placeholder="Search by account code"
+                    ariaLabel="Filter Account Code" />
+                </th>
+                <th>
 
                 </th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-subaccountcat>
+        <ng-template pTemplate="body" let-AccCat>
             <tr>
-                <td>{{subaccountcat.mainAccCategory}}</td>
-                <td>{{subaccountcat.code}}</td>
-                <td>{{subaccountcat.name}}</td>
+                <td>{{AccCat.code}}</td>
+                <td>{{AccCat.mainAccCategory}}</td>
+                <td>{{AccCat.subAccCategory}}</td>
+                <td>{{AccCat.accName}}</td>
                 <td>
-                    <button type="button" pButton pRipple icon="pi pi-file-edit" (click)="selectToUpdate(subaccountcat)">
+                    <button type="button" pButton pRipple icon="pi pi-file-edit" (click)="selectToUpdate(AccCat)">
                     </button>
-                    <button type="button" pButton pRipple icon="pi pi-trash" class="p-button-red" (click)="delete(subaccountcat)">
+                    <button type="button" pButton pRipple icon="pi pi-trash" class="p-button-red" (click)="delete(AccCat)">
                     </button>
                 </td>
             </tr>

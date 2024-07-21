@@ -5,7 +5,7 @@ import { HttpClient,HttpRequest, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { HttpService } from './Http.service';
 import { Response } from '../Models/Response';
-import { Accounts, SubAccCategories } from '../Models/Accounts';
+import { Accounts, EntryHeader, SubAccCategories } from '../Models/Accounts';
 import { UpdateData } from '../Models/UpdateData';
 
 
@@ -55,5 +55,10 @@ export class AccountsService {
   DeleteAccounts(data: Accounts): Observable<any> {
     return this.HttpService.postData(data,'api/TagFin/Account/DeleteAccounts',this.GlobalService.finApiUrl)
   }
+
+  InsertEntry(data: EntryHeader): Observable<any> {
+    return this.HttpService.postData(data,'api/TagFin/Account/InsertEntry',this.GlobalService.finApiUrl)
+  }
+
 
 }

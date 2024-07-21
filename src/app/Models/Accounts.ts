@@ -21,7 +21,6 @@ export class EntryDetails{
     accCode : string | undefined;
     amount : string | undefined;
     drCr : string | undefined;
-    payMethod : string | undefined;
 
     
     branchName : string | undefined;
@@ -36,6 +35,12 @@ export class EntryHeader{
     amount : string | undefined;
     reversalEntryNo : string | undefined;
     narration : string | undefined;
+    payMethod : string | undefined;
+    userId : number | undefined;
+    entryType : string | undefined;
+    entryDetails : EntryDetails[] = [];
+    entryDate : string | undefined;
+    customerCode : string | undefined;
 }
 
 export class Accounts{    

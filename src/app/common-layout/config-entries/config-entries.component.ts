@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MessagesComponent } from '../../messages/messages.component';
 import { Table } from 'primeng/table';
-import { EntryDetails, MainAccCategories, SubAccCategories } from '../../Models/Accounts';
+import { EntryDetails, EntryHeader, MainAccCategories, SubAccCategories } from '../../Models/Accounts';
 import { SettingsService } from '../../Services/Settings.service';
 import { AccountsService } from '../../Services/Accounts.service';
 import { PrimeConfig } from '../../prime.config';
@@ -40,6 +40,7 @@ export class ConfigEntriesComponent {
   entryDetailsList: EntryDetails[] = []
 
   entryDetailsObj: EntryDetails = new EntryDetails();
+  entryHeaderObj: EntryHeader = new EntryHeader();
 
   drCrOptions: any[] = [{ label: 'DR', value: 'DR' }, { label: 'CR', value: 'CR' }];
 
@@ -135,7 +136,6 @@ export class ConfigEntriesComponent {
         accCode: this.EntryForm?.value.accCode,
         amount: this.formatNumber(this.EntryForm?.value.amount),
         drCr: (this.EntryForm?.value.drCr == true ? "CR" : "DR"),
-        payMethod: "",
         branchName: this.branches.filter(branch => branch.code === this.EntryForm?.value.branchCode)[0].name,
         cr: (this.EntryForm?.value.drCr == true ? this.formatNumber(this.EntryForm?.value.amount) : ""),
         dr: (this.EntryForm?.value.drCr == true ? "" : this.formatNumber(this.EntryForm?.value.amount)),
@@ -209,7 +209,6 @@ export class ConfigEntriesComponent {
         accCode: this.EntryForm?.value.accCode,
         drCr: this.EntryForm?.value.drCr == true ? "CR" : "DR",
         amount: this.formatNumber(this.EntryForm?.value.amount),
-        payMethod: "",
         branchName: this.branches.filter(branch => branch.code === this.EntryForm?.value.branchCode)[0].name,
         cr: (this.EntryForm?.value.drCr == true ? this.formatNumber(this.EntryForm?.value.amount) : ""),
         dr: (this.EntryForm?.value.drCr == true ? "" : this.formatNumber(this.EntryForm?.value.amount)),
@@ -248,5 +247,43 @@ export class ConfigEntriesComponent {
     this.EntryForm?.patchValue({
       customerCode: customer.code
     })
+  }
+
+  SaveEntryHeader(){
+    if(this.debitTotal!=this.creditTotal){
+      this.messagesComponent?.showError("Total credit and debit is not equal");
+    }else{
+      this.entryHeaderObj.isReversal = false
+      this.entryHeaderObj.amount = this.creditTotalFormated
+      this.entryHeaderObj.narration = this.EntryForm?.value.narration
+      this.entryHeaderObj.narration = this.EntryForm?.value.narration
+      this.entryHeaderObj.payMethod = ""
+      this.entryHeaderObj.userId = this.userid
+      this.entryHeaderObj.entryType = "J"
+      this.entryHeaderObj.entryDetails = this.entryDetailsList
+      this.entryHeaderObj.entryDate = this.EntryForm?.value.entryDate
+      this.entryHeaderObj.customerCode = this.EntryForm?.value.customerCode
+
+      this.accountsService.InsertEntry(this.entryHeaderObj)
+      .subscribe({
+        next: (data: any) => {
+          if (data.code == "1000") {
+            this.messagesComponent!.showSuccess('Successfully inserted - Entry No is '+data.data[0].entryNo)
+            this.clearAll();
+          }
+          else {
+            this.messagesComponent!.showError(data.description);
+          }
+        },
+        error: (error: any) => {
+          this.messagesComponent?.showError(error);
+        },
+      });
+    }
+  }
+
+  clearAll(){
+    this.EntryForm?.reset();
+    this.entryDetailsList = [];
   }
 }

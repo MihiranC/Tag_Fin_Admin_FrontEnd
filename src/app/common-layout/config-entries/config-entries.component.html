@@ -13,8 +13,8 @@
                                     <div class="p-field p-fluid">
                                         <label>Entry Date</label>
                                         <div class="flex">
-                                            <p-calendar [iconDisplay]="'input'" [showIcon]="true"
-                                                inputId="icondisplay" class="w-100" formControlName="entryDate"/>
+                                            <p-calendar [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay"
+                                                class="w-100" formControlName="entryDate" />
                                         </div>
                                     </div>
                                 </div>
@@ -23,7 +23,8 @@
                                         <label>Customer Code</label>
                                         <div class="flex">
                                             <input pInputText type="text" formControlName="customerCode" readonly>
-                                            &nbsp;<app-customer-search (getSelected)="SelectCustomerFromSearch($event)"></app-customer-search>
+                                            &nbsp;<app-customer-search
+                                                (getSelected)="SelectCustomerFromSearch($event)"></app-customer-search>
                                         </div>
                                     </div>
                                 </div>
@@ -35,6 +36,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                @if(enType=='P'){
+                                <div class="col-md-4">
+                                    <div class="p-field p-fluid">
+                                        <label>Payment Method</label>
+                                        <p-dropdown [options]="paymentMethods" optionLabel="name" [filter]="true"
+                                            filterBy="name" [showClear]="true" placeholder="Select a payment method"
+                                            formControlName="payMethod" optionValue="code" />
+                                    </div>
+                                </div>
+                                }
                             </div>
                         </div>
                         <div class="sub-card-container row">
@@ -66,8 +77,8 @@
 
                                             <p-toggleButton onLabel="CR" offLabel="DR" onIcon="pi pi-check"
                                                 offIcon="pi pi-times" onIcon="pi pi-arrow-left"
-                                                offIcon="pi pi-arrow-right" styleClass="drcr"
-                                                ariaLabel="Do you confirm" formControlName="drCr" />
+                                                offIcon="pi pi-arrow-right" styleClass="drcr" ariaLabel="Do you confirm"
+                                                formControlName="drCr" />
                                         </div>
 
 
@@ -81,10 +92,12 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="d-flex justify-content-end">
-                                        <button type="submit" class="primary-buttons p-button-green" pButton pRipple (click)="SaveEntryDetails()">
+                                        <button type="submit" class="primary-buttons p-button-green" pButton pRipple
+                                            (click)="SaveEntryDetails()">
                                             <span>{{OperationBtnText}}</span>
                                         </button>
-                                        <button type="button" class="primary-buttons p-button-yellow" pButton pRipple (click)="ClearEntryDetails()">
+                                        <button type="button" class="primary-buttons p-button-yellow" pButton pRipple
+                                            (click)="ClearEntryDetails()">
                                             <span>Clear</span>
                                         </button>
                                     </div>
@@ -97,68 +110,65 @@
                     <div class="col-md-12">
                         <div class="sub-card-container row">
                             <div class="sub-card-title n-text-sub md">Added Entries</div>
-                            <p-table #dt2 [value]="entryDetailsList" styleClass="p-datatable-striped p-datatable-sm" [tableStyle]="{'min-width': '50rem'}"
-                            [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]"
-                            [globalFilterFields]="['accCode', 'branchName']">
-                            <ng-template pTemplate="caption">
-                                <div class="flex justify-content-end align-items-center">
-                                    <div class="p-inputgroup" style="width: 40%; min-width: 300px;">
-                                        <span class="p-inputgroup-addon">
-                                            <i class="pi pi-search"></i>
-                                        </span>
-                                        <input 
-                                            pInputText 
-                                            type="text" 
-                                            (input)="onFilterGlobal($event)" 
-                                            placeholder="Search keyword"
-                                            class="ml-auto"
-                                        />
+                            <p-table #dt2 [value]="entryDetailsList" styleClass="p-datatable-striped p-datatable-sm"
+                                [tableStyle]="{'min-width': '50rem'}" [paginator]="true" [rows]="5"
+                                [rowsPerPageOptions]="[5, 10, 20]" [globalFilterFields]="['accCode', 'branchName']">
+                                <ng-template pTemplate="caption">
+                                    <div class="flex justify-content-end align-items-center">
+                                        <div class="p-inputgroup" style="width: 40%; min-width: 300px;">
+                                            <span class="p-inputgroup-addon">
+                                                <i class="pi pi-search"></i>
+                                            </span>
+                                            <input pInputText type="text" (input)="onFilterGlobal($event)"
+                                                placeholder="Search keyword" class="ml-auto" />
+                                        </div>
                                     </div>
-                                </div>
-                            </ng-template>
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th>Branch</th>
-                                    <th>Account</th>
-                                    <th>DR</th>
-                                    <th>CR</th>
-                                    <th style="width: 40px;"></th>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        <p-columnFilter type="text" field="branchName" placeholder="Search by branch"
-                                            ariaLabel="Filter branch" />
-                                    </th>
-                                    <th>
-                                        <p-columnFilter type="text" field="accCode" placeholder="Search by account"
-                                            ariaLabel="Filter account" />
-                                    </th>
-                                    <th style="text-align: right; position: relative;">
-                                        <p-columnFilter type="text" field="dr" placeholder="Search by amount"
-                                            ariaLabel="Filter amount" />
-                                    </th>
-                                    <th style="text-align: right; position: relative;">
-                                        <p-columnFilter type="text" field="cr" placeholder="Search by amount"
-                                            ariaLabel="Filter amount" />
-                                    </th>
-                                    <th></th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-entryDetail>
-                                <tr>
-                                    <td>{{entryDetail.branchName}}</td>
-                                    <td>{{entryDetail.accCode}}</td>
-                                    <td style="text-align: right;">{{entryDetail.dr}}</td>
-                                    <td style="text-align: right;">{{entryDetail.cr}}</td>
-                                    <td class="flex">
-                                        <button type="button" pButton pRipple icon="pi pi-file-edit" (click)="selectToUpdate(entryDetail)">
-                                        </button>
-                                        <button type="button" pButton pRipple icon="pi pi-trash" class="p-button-red" (click)="delete(entryDetail)">
-                                        </button>
-                                    </td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Branch</th>
+                                        <th>Account</th>
+                                        <th>DR</th>
+                                        <th>CR</th>
+                                        <th style="width: 40px;"></th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <p-columnFilter type="text" field="branchName"
+                                                placeholder="Search by branch" ariaLabel="Filter branch" />
+                                        </th>
+                                        <th>
+                                            <p-columnFilter type="text" field="accCode" placeholder="Search by account"
+                                                ariaLabel="Filter account" />
+                                        </th>
+                                        <th style="text-align: right; position: relative;">
+                                            <p-columnFilter type="text" field="dr" placeholder="Search by amount"
+                                                ariaLabel="Filter amount" />
+                                        </th>
+                                        <th style="text-align: right; position: relative;">
+                                            <p-columnFilter type="text" field="cr" placeholder="Search by amount"
+                                                ariaLabel="Filter amount" />
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-entryDetail>
+                                    <tr>
+                                        <td>{{entryDetail.branchName}}</td>
+                                        <td>{{entryDetail.accCode}}</td>
+                                        <td style="text-align: right;">{{entryDetail.dr}}</td>
+                                        <td style="text-align: right;">{{entryDetail.cr}}</td>
+                                        <td class="flex">
+                                            <button type="button" pButton pRipple icon="pi pi-file-edit"
+                                                (click)="selectToUpdate(entryDetail)">
+                                            </button>
+                                            <button type="button" pButton pRipple icon="pi pi-trash"
+                                                class="p-button-red" (click)="delete(entryDetail)">
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
                         </div>
                     </div>
                 </div>
@@ -188,7 +198,8 @@
             </div>
             <div class="col-md-4">
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="primary-buttons p-button-green" pButton pRipple (click)="SaveEntryHeader()">
+                    <button type="submit" class="primary-buttons p-button-green" pButton pRipple
+                        (click)="SaveEntryHeader()">
                         <span>Save</span>
                     </button>
                     <button type="button" class="primary-buttons p-button-yellow" pButton pRipple (click)="clearAll()">

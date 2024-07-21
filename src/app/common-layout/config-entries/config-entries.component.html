@@ -1,0 +1,185 @@
+<div class="main-card-container">
+    <app-messages></app-messages>
+    <div class="main-card-title n-text-primary lg">Entry Details</div>
+    <form [formGroup]="EntryForm!">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="sub-card-container row">
+                            <div class="sub-card-title n-text-sub md">Fill Main Details</div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="p-field p-fluid">
+                                        <label>Entry Date</label>
+                                        <div class="flex">
+                                            <p-calendar [iconDisplay]="'input'" [showIcon]="true"
+                                                inputId="icondisplay" class="w-100" formControlName="entryDate"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="p-field p-fluid">
+                                        <label>Customer Code</label>
+                                        <div class="flex">
+                                            <input pInputText type="text" formControlName="customerCode" readonly>
+                                            &nbsp;<app-customer-search (getSelected)="SelectCustomerFromSearch($event)"></app-customer-search>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-field p-fluid">
+                                        <label>Narration</label>
+                                        <div class="flex">
+                                            <input pInputText type="text" formControlName="narration">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sub-card-container row">
+                            <div class="sub-card-title n-text-sub md">Fill Entry Details</div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="p-field p-fluid">
+                                        <label>Branch</label>
+                                        <p-dropdown [options]="branches" optionLabel="name" [filter]="true"
+                                            filterBy="name" [showClear]="true" placeholder="Select a branch"
+                                            formControlName="branchCode" optionValue="code" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="p-field p-fluid">
+                                        <label>Account</label>
+                                        <div class="flex">
+                                            <input pInputText type="text" formControlName="accCode" required>
+                                            &nbsp;<app-account-search></app-account-search>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="p-field p-fluid">
+                                        <label>Amount</label>
+                                        <div class="flex">
+                                            <p-inputNumber formControlName="amount" inputId="locale-user"
+                                                [minFractionDigits]="2" />
+
+                                            <p-toggleButton onLabel="CR" offLabel="DR" onIcon="pi pi-check"
+                                                offIcon="pi pi-times" onIcon="pi pi-arrow-left"
+                                                offIcon="pi pi-arrow-right" styleClass="drcr"
+                                                ariaLabel="Do you confirm" formControlName="drCr" />
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                </div>
+                                <div class="col-md-4">
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="primary-buttons p-button-green" pButton pRipple (click)="SaveEntryDetails()">
+                                            <span>{{OperationBtnText}}</span>
+                                        </button>
+                                        <button type="button" class="primary-buttons p-button-yellow" pButton pRipple (click)="ClearEntryDetails()">
+                                            <span>Clear</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="sub-card-container row">
+                            <div class="sub-card-title n-text-sub md">Added Entries</div>
+                            <p-table #dt2 [value]="entryDetailsList" styleClass="p-datatable-striped p-datatable-sm" [tableStyle]="{'min-width': '50rem'}"
+                            [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]"
+                            [globalFilterFields]="['accCode', 'branchName']">
+                            <ng-template pTemplate="caption">
+                                <div class="flex justify-content-end align-items-center">
+                                    <div class="p-inputgroup" style="width: 40%; min-width: 300px;">
+                                        <span class="p-inputgroup-addon">
+                                            <i class="pi pi-search"></i>
+                                        </span>
+                                        <input 
+                                            pInputText 
+                                            type="text" 
+                                            (input)="onFilterGlobal($event)" 
+                                            placeholder="Search keyword"
+                                            class="ml-auto"
+                                        />
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Branch</th>
+                                    <th>Account</th>
+                                    <th>DR</th>
+                                    <th>CR</th>
+                                    <th style="width: 40px;"></th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <p-columnFilter type="text" field="branchName" placeholder="Search by branch"
+                                            ariaLabel="Filter branch" />
+                                    </th>
+                                    <th>
+                                        <p-columnFilter type="text" field="accCode" placeholder="Search by account"
+                                            ariaLabel="Filter account" />
+                                    </th>
+                                    <th style="text-align: right; position: relative;">
+                                        <p-columnFilter type="text" field="dr" placeholder="Search by amount"
+                                            ariaLabel="Filter amount" />
+                                    </th>
+                                    <th style="text-align: right; position: relative;">
+                                        <p-columnFilter type="text" field="cr" placeholder="Search by amount"
+                                            ariaLabel="Filter amount" />
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-entryDetail>
+                                <tr>
+                                    <td>{{entryDetail.branchName}}</td>
+                                    <td>{{entryDetail.accCode}}</td>
+                                    <td style="text-align: right;">{{entryDetail.dr}}</td>
+                                    <td style="text-align: right;">{{entryDetail.cr}}</td>
+                                    <td class="flex">
+                                        <button type="button" pButton pRipple icon="pi pi-file-edit" (click)="selectToUpdate(entryDetail)">
+                                        </button>
+                                        <button type="button" pButton pRipple icon="pi pi-trash" class="p-button-red" (click)="delete(entryDetail)">
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="sub-card-container row">
+                    <div class="sub-card-title n-text-sub md">Summery</div>
+                    <div style="padding-left: 10px;">
+                        <table class="w-100">
+                            <tr style="color: rgb(51, 156, 91); font-weight: 600;">
+                                <td>Total Credit</td>
+                                <td style="text-align: right;">{{creditTotalFormated}}</td>
+                            </tr>
+                            <tr style="color: rgb(218, 51, 51); font-weight: 600">
+                                <td>Total Debit</td>
+                                <td style="text-align: right;">{{debitTotalFormated}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

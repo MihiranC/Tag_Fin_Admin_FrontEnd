@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
 import { GlobalService } from './Global.service';
-import {HttpClient,HttpRequest, HttpHeaders} from '@angular/common/http';
+import { HttpClient,HttpRequest, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {HttpService} from './Http.service';
+import { HttpService } from './Http.service';
 import { Response } from '../Models/Response';
 import { SubAccCategories } from '../Models/Accounts';
 import { UpdateData } from '../Models/UpdateData';

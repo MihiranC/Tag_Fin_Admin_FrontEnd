@@ -11,3 +11,29 @@ export class SubAccCategories{
     name : string | undefined;
     userId : number | undefined;
 }
+
+
+export class EntryDetails{     
+    id : number | undefined; 
+    headerId : number | undefined;
+    seqNo : number | undefined;
+    branchCode : string | undefined;
+    accCode : string | undefined;
+    amount : string | undefined;
+    drCr : string | undefined;
+    payMethod : string | undefined;
+
+    
+    branchName : string | undefined;
+    cr : string | undefined;
+    dr : string | undefined;
+}
+
+export class EntryHeader{    
+    id : number | undefined;
+    entryNo : string | undefined;
+    isReversal : boolean | undefined;
+    amount : string | undefined;
+    reversalEntryNo : string | undefined;
+    narration : string | undefined;
+}

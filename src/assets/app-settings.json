@@ -6,7 +6,7 @@
       "name": "WalletScienterEnv",
       "apiUrls": {
         "adminURL"  : "http://localhost:55011", 
-        "finURL" : "http://localhost:5181",
+        "finURL" : "http://localhost:13392",
         "key" : "zxcvbnmasdfghjkl",
         "iv" : "1234567890123456"
       } 

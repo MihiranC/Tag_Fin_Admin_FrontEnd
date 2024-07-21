@@ -15,7 +15,9 @@ export class SubAccCategories{
 export class Accounts{    
     id : number | undefined;
     code : string | undefined;
+    mainAccCode : string | undefined;
     subAccCode : string | undefined;
     name : string | undefined;
     userId : number | undefined;
+    accName: string | undefined;
 }

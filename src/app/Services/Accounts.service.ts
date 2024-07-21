@@ -5,7 +5,7 @@ import {HttpClient,HttpRequest, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {HttpService} from './Http.service';
 import { Response } from '../Models/Response';
-import { SubAccCategories } from '../Models/Accounts';
+import { Accounts, SubAccCategories } from '../Models/Accounts';
 import { UpdateData } from '../Models/UpdateData';
 
 
@@ -36,8 +36,24 @@ export class AccountsService {
     return this.HttpService.postData(data,'api/TagFin/Account/DeleteSubAccCategories',this.GlobalService.finApiUrl)
   }
 
-  SelectSubAccCategories(code: string, id: number): Observable<any> {
-    return this.HttpService.getData('api/TagFin/Account/SelectSubAccCategories', `code=${code}&id=${id}`,this.GlobalService.finApiUrl)
+  SelectSubAccCategories(code: string, id: number, mainAccCode: string): Observable<any> {
+    return this.HttpService.getData('api/TagFin/Account/SelectSubAccCategories', `code=${code}&id=${id}&mainAccCode=${mainAccCode}`,this.GlobalService.finApiUrl)
+  }
+
+  SelectAccounts(mainAccCode: string, subAccCode: string): Observable<any> {
+    return this.HttpService.getData('api/TagFin/Account/SelectAccounts', `mainAccCode=${mainAccCode}&subAccCode=${subAccCode}`,this.GlobalService.finApiUrl)
+  }
+
+  InsertAccounts(data: Accounts): Observable<any> {
+    return this.HttpService.postData(data,'api/TagFin/Account/InsertAccounts',this.GlobalService.finApiUrl)
+  }
+
+  UpdateAccounts(UpdateData: UpdateData): Observable<any> {
+    return this.HttpService.postData(UpdateData,'api/TagFin/Account/UpdateAccounts',this.GlobalService.finApiUrl)
+  }
+
+  DeleteAccounts(data: Accounts): Observable<any> {
+    return this.HttpService.postData(data,'api/TagFin/Account/DeleteAccounts',this.GlobalService.finApiUrl)
   }
 
 }

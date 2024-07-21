@@ -11,3 +11,11 @@ export class SubAccCategories{
     name : string | undefined;
     userId : number | undefined;
 }
+
+export class Accounts{    
+    id : number | undefined;
+    code : string | undefined;
+    subAccCode : string | undefined;
+    name : string | undefined;
+    userId : number | undefined;
+}

@@ -1,0 +1,135 @@
+<div class="main-card-container">
+    <app-messages></app-messages>
+    <div class="main-card-title n-text-primary lg">Fill Account Details</div>
+    <form [formGroup]="AccountForm!"  (submit)="onSubmit()">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="p-field p-fluid">
+                    <label>Code</label>
+                    <div class="flex">
+                        <input pInputText id="code" type="text" formControlName="code" [readonly]="readonly">
+                    </div>
+                </div>
+            </div>            
+            <div class="col-md-3">
+                <div class="p-field p-fluid">
+                    <label>Main Account Caegory</label>
+                    <p-dropdown 
+                    [options]="mainAccCategories"
+                    optionLabel="name"
+                    [filter]="true"
+                    filterBy="name" 
+                    [showClear]="true"
+                    placeholder="Select a main account category"
+                    formControlName="mainAccCode"
+                    optionValue="code"
+                    (onChange)="selectSubAccCategoriesForMainAccCategories($event.value)">                       
+                </p-dropdown>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-field p-fluid">
+                    <label>Sub Account Caegory</label>
+                    <p-dropdown 
+                    [options]="subAccCategories"
+                    optionLabel="name"
+                    [filter]="true"
+                    filterBy="name" 
+                    [showClear]="true"
+                    placeholder="Select a sub account category"
+                    formControlName="subAccCode"
+                    optionValue="code">                       
+                </p-dropdown>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-field p-fluid">
+                    <label>Account Name</label>
+                    <input pInputText type="text" formControlName="name">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+      
+            </div>
+            <div class="col-md-4">
+      
+            </div>
+            <div class="col-md-4">
+              <div class="d-flex justify-content-end">
+                
+                  
+                  <button type="submit" class="primary-buttons p-button-green" pButton pRipple
+                  [disabled]="AccountForm?.invalid">
+                  <span>{{OperationBtnText}}</span>
+                  </button>
+      
+                  <button type="button" class="primary-buttons p-button-yellow" pButton pRipple
+                  (click)="clearForm()">
+                  <span>Clear</span>
+                  </button>
+      
+              </div>
+            </div>
+      
+          </div>
+    </form>
+</div>
+<br>
+<div class="main-card-container">
+    <app-messages></app-messages>
+    <div class="main-card-title n-text-primary lg">Existing Account Details</div>
+    <p-table #dt2 [value]="AccList" styleClass="p-datatable-striped p-datatable-sm"
+        [tableStyle]="{'min-width': '50rem'}" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]"
+        [globalFilterFields]="['name', 'mainAccCategory', 'code']">
+        <ng-template pTemplate="caption">
+            <div class="flex justify-content-end align-items-center">
+                <div class="p-inputgroup" style="width: 40%; min-width: 300px;">
+                    <span class="p-inputgroup-addon">
+                        <i class="pi pi-search"></i>
+                    </span>
+                    <input pInputText type="text" (input)="onFilterGlobal($event)" placeholder="Search keyword"
+                        class="ml-auto" />
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Main Account Category</th>
+                <th>Sub Account Category</th>
+                <th>Account Name</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>
+                    <p-columnFilter type="text" field="mainAccCategory" placeholder="Search by main account category"
+                        ariaLabel="Filter Main Account Category" />
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="code" placeholder="Search by code" ariaLabel="Filter Code" />
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="lastName" placeholder="Search by sub account name"
+                        ariaLabel="Filter Sub Account Name" />
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-subaccountcat>
+            <tr>
+                <td>{{subaccountcat.mainAccCategory}}</td>
+                <td>{{subaccountcat.code}}</td>
+                <td>{{subaccountcat.name}}</td>
+                <td>
+                    <button type="button" pButton pRipple icon="pi pi-file-edit" (click)="selectToUpdate(subaccountcat)">
+                    </button>
+                    <button type="button" pButton pRipple icon="pi pi-trash" class="p-button-red" (click)="delete(subaccountcat)">
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

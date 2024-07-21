@@ -153,3 +153,38 @@ p-inputnumber {
 //   display: none;
 //   margin-right: 0.5rem;
 // }
+
+p-togglebutton .pi{
+  font-size: x-small;
+}
+
+p-togglebutton .p-button-label {
+  font-size: small;
+}
+
+p-togglebutton .p-button {
+ margin: 0px;
+}
+
+.drcr{
+  background: rgb(218, 51, 51);
+  color: white;  
+}
+
+.drcr .pi{
+  color: white;
+}
+
+.drcr.p-highlight {
+  background: rgb(51, 156, 91) !important;
+  color: white; // Add this if you want to keep the text color white for p-highlight as well
+}
+
+.p-datepicker table td > span {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  transition: box-shadow 0.2s;
+  border: 1px solid transparent;
+  font-size: small;
+}

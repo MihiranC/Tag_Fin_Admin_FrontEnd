@@ -35,6 +35,11 @@ export const routes: Routes = [
             loadComponent:() => import('./common-layout/sub-account-categories/sub-account-categories.component').then(m=>m.SubAccountCategoriesComponent),
           },
           {
+            title: 'EvoFin | Accounts | Add Entries',
+            path: 'ConfigEntries', // child route path
+            loadComponent:() => import('./common-layout/config-entries/config-entries.component').then(m=>m.ConfigEntriesComponent),
+          },
+          {
             title: 'EvoFin | Accounts | Accounts',
             path: 'Accounts', // child route path
             loadComponent:() => import('./common-layout/accounts/accounts.component').then(m=>m.AccountsComponent),

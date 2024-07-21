@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MessagesComponent } from '../../messages/messages.component';
 import { Table } from 'primeng/table';
-import { EntryDetails, EntryHeader, MainAccCategories, SubAccCategories } from '../../Models/Accounts';
+import { EntryDetails, EntryHeader, MainAccCategories, PaymentMethods, SubAccCategories } from '../../Models/Accounts';
 import { SettingsService } from '../../Services/Settings.service';
 import { AccountsService } from '../../Services/Accounts.service';
 import { PrimeConfig } from '../../prime.config';
@@ -11,6 +11,7 @@ import { BranchService } from '../../Services/Branch.service';
 import { Branch } from '../../Models/Branch';
 import { CustomerSearchComponent } from '../CommonControllers/customer-search/customer-search.component';
 import { Customer } from '../../Models/Customer';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-config-entries',
@@ -36,6 +37,7 @@ export class ConfigEntriesComponent {
   mainAccCategories: MainAccCategories[] = [];
   subAccCategoryList: SubAccCategories[] = [];
   branches: Branch[] = [];
+  paymentMethods: PaymentMethods[] = [];
 
   entryDetailsList: EntryDetails[] = []
 
@@ -52,11 +54,15 @@ export class ConfigEntriesComponent {
 
   selectedCurrentIndex : number = 0;
 
+  enType : string = 'J'
+
   constructor(
     private fb: FormBuilder,
     public settingsService: SettingsService,
     public accountsService: AccountsService,
     public branchService: BranchService,
+    private route: ActivatedRoute,
+    private router: Router,
   ) {
     this.EntryForm = this.fb.group({
       //id: new FormControl(0),
@@ -68,11 +74,28 @@ export class ConfigEntriesComponent {
       narration: new FormControl('', Validators.required),
       entryDate: new FormControl('', Validators.required),
       customerCode : new FormControl(''),
+      payMethod: new FormControl(''),
     });
   }
 
+  
+
   ngOnInit(): void {
-    this.loadBranch()
+    this.route.queryParams.subscribe(params => {
+      this.enType = params['EnType'];
+      this.clearAll();
+    });
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.route.queryParams.subscribe(params => {
+          this.enType = params['EnType'];
+          this.clearAll();
+        });
+      }
+    });
+    this.loadBranch();
+    this.loadPaymentMethods();
   }
 
   loadBranch() {
@@ -81,6 +104,24 @@ export class ConfigEntriesComponent {
         next: (data: any) => {
           if (data.code == "1000") {
             this.branches = data.data
+          }
+          else {
+            this.messagesComponent!.showError(data.description);
+          }
+        },
+        error: (error: any) => {
+          this.messagesComponent?.showError(error);
+        },
+      });
+  }
+
+  
+  loadPaymentMethods() {
+    this.accountsService.SelectPaymentMethods('')
+      .subscribe({
+        next: (data: any) => {
+          if (data.code == "1000") {
+            this.paymentMethods = data.data
           }
           else {
             this.messagesComponent!.showError(data.description);
@@ -257,9 +298,9 @@ export class ConfigEntriesComponent {
       this.entryHeaderObj.amount = this.creditTotalFormated
       this.entryHeaderObj.narration = this.EntryForm?.value.narration
       this.entryHeaderObj.narration = this.EntryForm?.value.narration
-      this.entryHeaderObj.payMethod = ""
+      this.entryHeaderObj.payMethod = this.EntryForm?.value.payMethod
       this.entryHeaderObj.userId = this.userid
-      this.entryHeaderObj.entryType = "J"
+      this.entryHeaderObj.entryType = this.enType
       this.entryHeaderObj.entryDetails = this.entryDetailsList
       this.entryHeaderObj.entryDate = this.EntryForm?.value.entryDate
       this.entryHeaderObj.customerCode = this.EntryForm?.value.customerCode

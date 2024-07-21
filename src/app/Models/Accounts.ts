@@ -3,6 +3,11 @@ export class MainAccCategories{
     code : string | undefined;
 }
 
+export class PaymentMethods{
+    name : string | undefined;
+    code : string | undefined;
+}
+
 export class SubAccCategories{    
     id : number | undefined;
     code : string | undefined;

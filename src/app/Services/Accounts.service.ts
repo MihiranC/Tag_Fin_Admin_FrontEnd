@@ -60,5 +60,7 @@ export class AccountsService {
     return this.HttpService.postData(data,'api/TagFin/Account/InsertEntry',this.GlobalService.finApiUrl)
   }
 
-
+  SelectPaymentMethods(code: string): Observable<any> {
+    return this.HttpService.getData('api/TagFin/Account/SelectPaymentMethods', `code=${code}`,this.GlobalService.finApiUrl)
+  }
 }

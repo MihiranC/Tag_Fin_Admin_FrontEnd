@@ -12,7 +12,8 @@
               <i [ngClass]="['nav-icon', header.icon]"></i> &nbsp; {{header.headerName}}
             </ng-template>
             @for (submenu of header.pages; track submenu.pageName; let subindex = $index ) {
-            <div class="nav-sub-menues" [ngClass]="{'nav-sub-selected': submenu.selected}" (click)="goToPage(subindex,index)">
+            <div class="nav-sub-menues" [ngClass]="{'nav-sub-selected': submenu.selected}"
+              (click)="goToPage(subindex,index)">
               {{submenu.pageName}}
             </div>
             }
@@ -43,7 +44,7 @@
                 <br /><span class="n-text-disabled">Good Morning</span>
               </td>
               <td style="content: right; width: 1%">
-                <i class="pi pi-power-off text-3xl" style="font-size: x-large; cursor: pointer;" (click)="logOut()" ></i>
+                <i class="pi pi-power-off text-3xl" style="font-size: x-large; cursor: pointer;" (click)="logOut()"></i>
               </td>
             </tr>
           </tbody>
@@ -62,23 +63,59 @@
                 &nbsp;
                 <span class="n-text-title">Hi {{username}},</span>
                 &nbsp;
-                <i class="pi pi-power-off text-3xl" style="font-size: x-large; cursor: pointer;" (click)="logOut()" ></i>
+                <i class="pi pi-power-off text-3xl" style="font-size: x-large; cursor: pointer;" (click)="logOut()"></i>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <table>
+      <table style="width:100%;  border-collapse: separate;  border-spacing: 0 5px; ">
         <tbody>
           <tr>
-            <td style="vertical-align: middle; width: 40px;"><i class="pi pi-bars text-3xl drag-menu" (click)="showHideMenu()"></i></td>
-            <td style="vertical-align: middle;"><div class="n-text-primary" [innerHtml]="mainTitle"></div></td>
+            <td style="vertical-align: middle; width: 40px;"><i class="pi pi-bars text-3xl drag-menu"
+                (click)="showHideMenu()"></i></td>
+            <td style="vertical-align: middle;">
+              <div class="n-text-primary" [innerHtml]="mainTitle"></div>
+            </td>
           </tr>
         </tbody>
       </table>
-      <div class="inner-body-content">      
+      <div class="inner-body-content">
         <router-outlet></router-outlet>
       </div>
     </div>
   </div>
 </div>
+
+<p-dialog header="E V O F I N &nbsp;&nbsp;Menu" [modal]="true" [(visible)]="menuVisible" [style]="{ width: '50rem' }"
+  [breakpoints]="{ '2199px': '75vw', '875px': '90vw' }" [maximizable]="true" position="top">
+  <div class="flex justify-content-end align-items-center">
+    <div class="p-inputgroup" style="width: 40%; min-width: 300px;">
+      <span class="p-inputgroup-addon">
+        <i class="pi pi-search"></i>
+      </span>
+      <input pInputText type="text" placeholder="Search keyword" class="ml-auto" (input)="onFilterMenu($event)" />
+    </div>
+  </div>
+  <div class="row">
+    @for (header of filteredMenues; track header.headerName; let index = $index ) {
+    <div class="col-md-6">
+      <p-accordion class="w-full" [activeIndex]="0">
+        <div class="sub-card-container row">
+          <p-accordionTab class="nav-menu-header">
+            <ng-template pTemplate="header">
+              <i [ngClass]="['nav-icon', header.icon]"></i> &nbsp; {{header.headerName}}
+            </ng-template>
+            @for (submenu of header.pages; track submenu.pageName; let subindex = $index ) {
+            <div class="nav-sub-menues" [ngClass]="{'nav-sub-selected': submenu.selected}"
+              (click)="goToPage(subindex,index)">
+              {{submenu.pageName}}
+            </div>
+            }
+          </p-accordionTab>
+        </div>
+      </p-accordion>
+    </div>
+    }
+  </div>
+</p-dialog>

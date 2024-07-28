@@ -37,6 +37,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputMaskModule } from 'primeng/inputmask';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { MenubarModule } from 'primeng/menubar';
 
 @NgModule({
     declarations: [],
@@ -75,7 +76,8 @@ import { SelectButtonModule } from 'primeng/selectbutton';
     IconFieldModule,
     InputIconModule,
     InputMaskModule,
-    SelectButtonModule
+    SelectButtonModule,
+    MenubarModule
     //Add more modules as needed
     ],
 
@@ -113,7 +115,8 @@ import { SelectButtonModule } from 'primeng/selectbutton';
     IconFieldModule,
     InputIconModule,
     InputMaskModule,
-    SelectButtonModule
+    SelectButtonModule,
+    MenubarModule
         // Add more modules as needed
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],

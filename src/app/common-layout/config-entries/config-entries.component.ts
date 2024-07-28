@@ -206,7 +206,7 @@ export class ConfigEntriesComponent {
     this.EntryForm?.patchValue({
       branchCode: entryDetail.branchCode,
       accCode: entryDetail.accCode,
-      amount: entryDetail.amount,
+      amount: Number(entryDetail.amount!.replace(/,/g, "")),
       drCr: (entryDetail.drCr == "CR" ? true : false),
     })
     this.selectedCurrentIndex = this.entryDetailsList.findIndex(en =>
@@ -240,10 +240,10 @@ export class ConfigEntriesComponent {
       && en.amount === this.formatNumber(this.EntryForm?.value.amount)
     )
 
-    if (alreadyExistsIndex!=entryIndex) {
+    if (alreadyExistsIndex!=entryIndex && alreadyExistsIndex!=-1) {
       this.messagesComponent?.showError("This entry is already exists");
     }
-    if (entryIndex !== -1) {
+    else if (entryIndex !== -1) {
       // Update the entry
       this.entryDetailsList[entryIndex] = {
         branchCode: this.EntryForm?.value.branchCode,
@@ -326,5 +326,9 @@ export class ConfigEntriesComponent {
   clearAll(){
     this.EntryForm?.reset();
     this.entryDetailsList = [];
+    this.debitTotal = 0;
+    this.creditTotal = 0;
+    this.debitTotalFormated = this.formatNumber(this.debitTotal)
+    this.creditTotalFormated = this.formatNumber(this.creditTotal)
   }
 }

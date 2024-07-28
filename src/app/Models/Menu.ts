@@ -15,3 +15,15 @@ export class SubMenu {
    fontsize:string| undefined;
    selected:boolean = false;
  }
+
+
+ export class MainMenuBar {
+   label : string = "";
+   icon : string = "";
+   items : SubMenuBar[] = []
+}
+
+export class SubMenuBar {
+   label : string = "";
+   icon : string = "";
+ }

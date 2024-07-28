@@ -43,6 +43,11 @@ export const routes: Routes = [
             title: 'EvoFin | Accounts | Accounts',
             path: 'Accounts', // child route path
             loadComponent:() => import('./common-layout/accounts/accounts.component').then(m=>m.AccountsComponent),
+          },
+          {
+            title: 'EvoFin | Accounts | Inquiry',
+            path: 'Inquiry', // child route path
+            loadComponent:() => import('./common-layout/inquiry/inquiry.component').then(m=>m.InquiryComponent),
           }
         ],
       },

@@ -1,0 +1,206 @@
+<div class="main-card-container">
+    <app-messages></app-messages>
+    <div class="main-card-title n-text-primary lg">Fill Inquiry Details</div>
+    <form [formGroup]="InquiryForm!"  (submit)="onSubmit()">
+        <div class="row">                      
+            <div class="col-md-3">
+                <div class="p-field p-fluid">
+                    <label>Main Account Caegory</label>
+                    <p-dropdown 
+                    [options]="mainAccCategories"
+                    optionLabel="name"
+                    [filter]="true"
+                    filterBy="name" 
+                    [showClear]="true"
+                    placeholder="Select a main account category"
+                    formControlName="mainAccCode"
+                    optionValue="code"
+                    (onChange)="selectSubAccCategoriesForMainAccCategories($event.value)">                       
+                </p-dropdown>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-field p-fluid">
+                    <label>Sub Account Caegory</label>
+                    <p-dropdown 
+                    [options]="subAccCategories"
+                    optionLabel="name"
+                    [filter]="true"
+                    filterBy="name" 
+                    [showClear]="true"
+                    placeholder="Select a sub account category"
+                    formControlName="subAccCode"
+                    optionValue="code">                       
+                </p-dropdown>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="p-field p-fluid">
+                    <label>Account Number</label>
+                    <div class="flex">
+                        <input pInputText id="accountNo" type="text" formControlName="accountNo">
+                    </div>
+                </div>
+            </div>  
+            <div class="col-md-2">
+                <div class="p-field p-fluid">
+                    <label>Entry Number</label>
+                    <input pInputText id="enteryNo"  type="text" formControlName="entryNo">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="p-field p-fluid">
+                    <label>Customer Code</label>
+                    <div class="flex">
+                        <input pInputText id="customerCode" type="text" formControlName="customerCode">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            
+            <div class="col-md-3">
+                <div class="p-field p-fluid">
+                    <label>From Amount</label>
+                    <p-inputNumber 
+                        [(ngModel)]="value1"
+                        mode="currency" 
+                        inputId="currency-srilanka" 
+                        currency="LKR" 
+                        currencyDisplay="code" 
+                        locale="en-LK" 
+                        formControlName="fromAmount"/> 
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-field p-fluid">
+                    <label>To Amount</label>
+                    <p-inputNumber 
+                        [(ngModel)]="value2"
+                        mode="currency" 
+                        inputId="currency-srilanka" 
+                        currency="LKR" 
+                        currencyDisplay="code" 
+                        locale="en-LK" 
+                        formControlName="toAmount"/> 
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-field p-fluid">
+                    <label>From Date</label>
+                    <div>
+                        <p-calendar 
+                        [(ngModel)]="date1" 
+                        [iconDisplay]="'input'" 
+                        [showIcon]="true" 
+                        inputId="icondisplay" 
+                        formControlName="fromDate"/> 
+                    </div>
+                </div>
+            </div>  
+            <div class="col-md-3">
+                <div class="p-field p-fluid">
+                    <label>To Date</label>
+                    <div>
+                        <p-calendar 
+                        [(ngModel)]="date2" 
+                        [iconDisplay]="'input'" 
+                        [showIcon]="true" 
+                        inputId="icondisplay" 
+                        formControlName="toDate"/> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+      
+            </div>
+            <div class="col-md-4">
+      
+            </div>
+            <div class="col-md-4">
+              <div class="d-flex justify-content-end">
+                
+                  
+                  <button type="submit" class="primary-buttons p-button-green" pButton pRipple
+                  [disabled]="InquiryForm?.invalid">
+                  <span>Search</span>
+                  </button>
+      
+                  <button type="button" class="primary-buttons p-button-yellow" pButton pRipple
+                  (click)="clearForm()">
+                  <span>Clear</span>
+                  </button>
+      
+              </div>
+            </div>
+      
+          </div>
+    </form>
+</div>
+<br>
+<div class="main-card-container">
+    <app-messages></app-messages>
+    <div class="main-card-title n-text-primary lg">Search Results</div>
+    <p-table #dt2 [value]="this.InqList" styleClass="p-datatable-striped p-datatable-sm"
+        [tableStyle]="{'min-width': '50rem'}" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]"
+        [globalFilterFields]="['accountNo', 'customerName', 'amount']">
+        <ng-template pTemplate="caption">
+            <div class="flex justify-content-end align-items-center">
+                <div class="p-inputgroup" style="width: 40%; min-width: 300px;">
+                    <span class="p-inputgroup-addon">
+                        <i class="pi pi-search"></i>
+                    </span>
+                    <input pInputText type="text" (input)="onFilterGlobal($event)" placeholder="Search keyword"
+                        class="ml-auto" />
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Account Number</th>
+                <th>Amount</th>
+                <th>Customer Name</th>
+                <th>Entry Date</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>
+                    <p-columnFilter type="text" field="accountNo" placeholder="Search by main account number"
+                        ariaLabel="Filter Main Account Category" />
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="amount" placeholder="Search by amount" ariaLabel="Filter Code" />
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="customerName" placeholder="Search by Customer name"
+                        ariaLabel="Filter Sub Account Name" />
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="entryDate" placeholder="Search by entry date"
+                    ariaLabel="Filter Account Code" />
+                </th>
+                <!-- <th>
+
+                </th> -->
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-Inq>
+            <tr>
+                <td>{{Inq.accountNo}}</td>
+                <td>{{Inq.amount}}</td>
+                <td>{{Inq.customerName}}</td>
+                <td>{{Inq.entryDate}}</td>
+                <!-- <td>
+                    <button type="button" pButton pRipple icon="pi pi-file-edit" (click)="selectToUpdate(AccCat)">
+                    </button>
+                    <button type="button" pButton pRipple icon="pi pi-trash" class="p-button-red" (click)="delete(AccCat)">
+                    </button>
+                </td> -->
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

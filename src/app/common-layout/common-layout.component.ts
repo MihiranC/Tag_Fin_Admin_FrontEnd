@@ -6,6 +6,7 @@ import { MenuService } from '../Services/Menu.service';
 import { MessagesComponent } from '../messages/messages.component';
 import { MainMenu, SubMenu } from '../Models/Menu';
 import { UserService } from '../Services/User.service';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-common-layout',
@@ -30,12 +31,16 @@ export class CommonLayoutComponent {
 
   mainMenues: MainMenu[] = [];
   subMenues: SubMenu[] = [];
+  menuVisible: boolean = false;
 
   mainTitle: string = "";
   username: string = ''
   userid : number = Number(sessionStorage.getItem("LoggedUserID")!);
 
   isShownMenu : boolean = false;
+
+  items: MenuItem[] | undefined;
+  searchText: string = '';
 
   ngAfterViewInit(): void {
     //this.username = 'Gayan';
@@ -53,7 +58,8 @@ export class CommonLayoutComponent {
     .subscribe({
       next: (data: any) => {
         if (data.code == "1000") {
-          this.mainMenues = data.data          
+          this.mainMenues = data.data
+          this.items = this.mapMainMenuArrayToMainMenuBarArray(this.mainMenues)          
           this.mainTitle = this.mainMenues[0].headerName + " | " + this.mainMenues[0].pages![0].pageName
           this.mainMenues[0].pages![0].selected = true
           this.mainMenues[0].expanded = true 
@@ -84,19 +90,35 @@ export class CommonLayoutComponent {
   }
 
   showHideMenu() {
-    const menu = this.elementRef.nativeElement.querySelector('.nav-bar-container');
-    const body = this.elementRef.nativeElement.querySelector('.body-layout');
-    if(!this.isShownMenu){
-      menu.style.marginLeft = '0em';
-      body.style.width = `calc(100vw - 11em)`;
-      this.isShownMenu = true;
-    }else{
-      menu.style.marginLeft = '-11em';
-      body.style.width = `calc(100vw)`;
-      this.isShownMenu = false;
-    }
+    // const menu = this.elementRef.nativeElement.querySelector('.nav-bar-container');
+    // const body = this.elementRef.nativeElement.querySelector('.body-layout');
+    // if(!this.isShownMenu){
+    //   menu.style.marginLeft = '0em';
+    //   body.style.width = `calc(100vw - 11em)`;
+    //   this.isShownMenu = true;
+    // }else{
+    //   menu.style.marginLeft = '-11em';
+    //   body.style.width = `calc(100vw)`;
+    //   this.isShownMenu = false;
+    // }
 
+    //new mwnu
+    this.searchText = ''
+    this.menuVisible = true;
   }
+
+  onFilterMenu(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.searchText = input.value.toLowerCase();
+  }
+
+  get filteredMenues() {
+    if (!this.searchText) return this.mainMenues;
+    return this.mainMenues.filter(header =>
+      header.pages.some(submenu => submenu.pageName.toLowerCase().includes(this.searchText))
+    );
+  }
+
 
   goToPage(pageIndex: number, headerIndex: number) {
     this.mainTitle = this.mainMenues[headerIndex].headerName + " | " + this.mainMenues[headerIndex].pages![pageIndex].pageName;
@@ -124,6 +146,8 @@ export class CommonLayoutComponent {
     }else{
       this.Router.navigate(['/app/'+this.mainMenues[headerIndex].pages![pageIndex].path])
     }
+
+    this.menuVisible = false;
   }
 
   logOut(){
@@ -142,5 +166,20 @@ export class CommonLayoutComponent {
       params[key] = value;
       return params;
     }, {});
+  }
+
+  mapMainMenuToMainMenuBar(mainMenu: MainMenu): MenuItem {
+    return {
+      label: mainMenu.headerName,
+      icon: mainMenu.icon ?? '',
+      items: mainMenu.pages.map(page => ({
+        label: page.pageName,
+        icon: "pi pi-chevron-right sm"
+      }))
+    };
+  }
+
+  mapMainMenuArrayToMainMenuBarArray(mainMenuArray: MainMenu[]): MenuItem[] {
+    return mainMenuArray.map(this.mapMainMenuToMainMenuBar);
   }
 }

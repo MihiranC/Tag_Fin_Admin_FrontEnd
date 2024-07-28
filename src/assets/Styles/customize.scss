@@ -1,4 +1,6 @@
-.flex{
+@import 'colors.scss';
+
+.flex {
   display: flex;
 }
 
@@ -11,7 +13,7 @@
   padding-left: 10px;
 }
 
-.p-icon-field-left > .p-inputtext {
+.p-icon-field-left>.p-inputtext {
   padding-left: 2.5rem;
 }
 
@@ -134,9 +136,10 @@ p-inputnumber {
 .p-accordion .p-accordion-header .p-accordion-header-link {
   padding: 5px;
   border: none;
-  color: #bdb7b7 !important;
+  color: $primary-color !important;
   background: transparent;
-  font-weight: 400;
+  font-weight: 600;
+  font-size: medium;
   transition: box-shadow 0.2s;
   text-decoration: none !important;
 }
@@ -146,7 +149,13 @@ p-inputnumber {
   margin-left: 15px;
   border: none;
   background: transparent;
-  color: #bdb7b7;
+  color: #425e86;
+}
+
+.p-dialog-content {
+  border-bottom-color: $primary-color !important;
+  border-bottom-width: 15px;
+  border-bottom-style: solid !important;
 }
 
 // .p-accordion .p-accordion-header .p-accordion-header-link .p-accordion-toggle-icon {
@@ -154,7 +163,7 @@ p-inputnumber {
 //   margin-right: 0.5rem;
 // }
 
-p-togglebutton .pi{
+p-togglebutton .pi {
   font-size: x-small;
 }
 
@@ -163,15 +172,15 @@ p-togglebutton .p-button-label {
 }
 
 p-togglebutton .p-button {
- margin: 0px;
+  margin: 0px;
 }
 
-.drcr{
+.drcr {
   background: rgb(218, 51, 51);
-  color: white;  
+  color: white;
 }
 
-.drcr .pi{
+.drcr .pi {
   color: white;
 }
 
@@ -180,11 +189,25 @@ p-togglebutton .p-button {
   color: white; // Add this if you want to keep the text color white for p-highlight as well
 }
 
-.p-datepicker table td > span {
+.p-datepicker table td>span {
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
   transition: box-shadow 0.2s;
   border: 1px solid transparent;
   font-size: small;
+}
+
+.p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-content .p-menuitem-link {
+  padding: 0.1rem 1.25rem !important;
+}
+
+dl,
+ol,
+ul {
+  margin-bottom: 0px !important;
+}
+
+a {
+  text-decoration: none !important;
 }

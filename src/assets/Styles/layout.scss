@@ -7,7 +7,7 @@ body {
 }
 
 .nav-menu-header:hover .nav-icon{
-  color: #8da8a7;
+  color: $primary-selectedmenu-color;
 }
 
 .nav-bar-container {
@@ -24,7 +24,7 @@ body {
 .nav-icon{
   border: solid 1px;
   border-radius: 5px;
-  border-color: #556b6b;
+  border-color: $primary-submenu-color;
   padding:5px;
 }
 
@@ -32,20 +32,20 @@ body {
   border-left: solid 1px;
   padding-left: 10px;
   margin-left: 22px;
-  color: #8aabaf;
+  color: $primary-submenu-color;
   font-weight: 400;
-  border-color: #556b6b;
+  border-color: $primary-submenu-color;
 }
 
 .nav-sub-menues:hover{
-  border-color: #dceeed;
-  color: #dceeed;
+  border-color: $primary-selectedmenu-color;
+  color: $primary-selectedmenu-color;
   cursor: pointer;
 }
 
 .nav-sub-selected{
-  border-color: #dceeed;
-  color: #dceeed;
+  border-color: $primary-selectedmenu-color;
+  color: $primary-selectedmenu-color;
   cursor: pointer;
 }
 

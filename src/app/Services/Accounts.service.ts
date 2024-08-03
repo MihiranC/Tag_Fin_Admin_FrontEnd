@@ -7,6 +7,7 @@ import { HttpService } from './Http.service';
 import { Response } from '../Models/Response';
 import { Accounts, EntryHeader, SubAccCategories } from '../Models/Accounts';
 import { UpdateData } from '../Models/UpdateData';
+import { Inquiry } from '../Models/Inquiry';
 
 
 @Injectable({
@@ -62,5 +63,9 @@ export class AccountsService {
 
   SelectPaymentMethods(code: string): Observable<any> {
     return this.HttpService.getData('api/TagFin/Account/SelectPaymentMethods', `code=${code}`,this.GlobalService.finApiUrl)
+  }
+
+  SearchAccountsInquiry(data: Inquiry): Observable<any> {
+    return this.HttpService.postData(data,'api/TagFin/Account/SearchAccountsInquiry',this.GlobalService.finApiUrl)
   }
 }

@@ -48,6 +48,11 @@ export const routes: Routes = [
             title: 'EvoFin | App | Generate Application',
             path: 'GenerateApplication', // child route path
             loadComponent:() => import('./common-layout/generate-application/generate-application.component').then(m=>m.GenerateApplicationComponent),
+          },
+          {
+            title: 'EvoFin | Accounts | Inquiry',
+            path: 'Inquiry', // child route path
+            loadComponent:() => import('./common-layout/inquiry/inquiry.component').then(m=>m.InquiryComponent),
           }
         ],
       },

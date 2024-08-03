@@ -12,6 +12,7 @@ import { Branch } from '../../Models/Branch';
 import { CustomerSearchComponent } from '../CommonControllers/customer-search/customer-search.component';
 import { Customer } from '../../Models/Customer';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
+import { formatNumber } from '../../common-functions/number';
 
 @Component({
   selector: 'app-config-entries',
@@ -141,7 +142,7 @@ export class ConfigEntriesComponent {
   }
 
   SaveEntryDetails() {
-    if (this.EntryForm?.value.branchCode == "" || this.EntryForm?.value.accCode == "" || this.formatNumber(this.EntryForm?.value.amount) == "0.00") {
+    if (this.EntryForm?.value.branchCode == "" || this.EntryForm?.value.accCode == "" || formatNumber(this.EntryForm?.value.amount) == "0.00") {
       this.messagesComponent?.showError("Fill the details");
     }
     else {
@@ -167,7 +168,7 @@ export class ConfigEntriesComponent {
     if (this.entryDetailsList.filter(en => en.branchCode === this.EntryForm?.value.branchCode
       && en.accCode === this.EntryForm?.value.accCode
       && en.drCr === (this.EntryForm?.value.drCr == true ? "CR" : "DR")
-      && en.amount === this.formatNumber(this.EntryForm?.value.amount)
+      && en.amount === formatNumber(this.EntryForm?.value.amount)
     ).length > 0) {
       this.messagesComponent?.showError("This entry is already exists");
     }
@@ -175,30 +176,23 @@ export class ConfigEntriesComponent {
       this.entryDetailsList.push({
         branchCode: this.EntryForm?.value.branchCode,
         accCode: this.EntryForm?.value.accCode,
-        amount: this.formatNumber(this.EntryForm?.value.amount),
+        amount: formatNumber(this.EntryForm?.value.amount),
         drCr: (this.EntryForm?.value.drCr == true ? "CR" : "DR"),
         branchName: this.branches.filter(branch => branch.code === this.EntryForm?.value.branchCode)[0].name,
-        cr: (this.EntryForm?.value.drCr == true ? this.formatNumber(this.EntryForm?.value.amount) : ""),
-        dr: (this.EntryForm?.value.drCr == true ? "" : this.formatNumber(this.EntryForm?.value.amount)),
+        cr: (this.EntryForm?.value.drCr == true ? formatNumber(this.EntryForm?.value.amount) : ""),
+        dr: (this.EntryForm?.value.drCr == true ? "" : formatNumber(this.EntryForm?.value.amount)),
         id: 0,
         headerId: 0,
         seqNo: 0
       })
       this.debitTotal = this.debitTotal + (this.EntryForm?.value.drCr == true ? 0 : Number(this.EntryForm?.value.amount))
       this.creditTotal = this.creditTotal + (this.EntryForm?.value.drCr == true ? Number(this.EntryForm?.value.amount) : 0)
-      this.debitTotalFormated = this.formatNumber(this.debitTotal)
-      this.creditTotalFormated = this.formatNumber(this.creditTotal)
+      this.debitTotalFormated = formatNumber(this.debitTotal)
+      this.creditTotalFormated = formatNumber(this.creditTotal)
       this.ClearEntryDetails();
     }
 
     this.dt2!.filterGlobal('', 'contains');
-  }
-
-  formatNumber(value: number): string {
-    return new Intl.NumberFormat('en-US', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    }).format(value);
   }
 
   selectToUpdate(entryDetail: EntryDetails) {
@@ -237,7 +231,7 @@ export class ConfigEntriesComponent {
     const alreadyExistsIndex = this.entryDetailsList.findIndex(en => en.branchCode === this.EntryForm?.value.branchCode
       && en.accCode === this.EntryForm?.value.accCode
       && en.drCr === (this.EntryForm?.value.drCr == true ? "CR" : "DR")
-      && en.amount === this.formatNumber(this.EntryForm?.value.amount)
+      && en.amount === formatNumber(this.EntryForm?.value.amount)
     )
 
     if (alreadyExistsIndex!=entryIndex && alreadyExistsIndex!=-1) {
@@ -249,10 +243,10 @@ export class ConfigEntriesComponent {
         branchCode: this.EntryForm?.value.branchCode,
         accCode: this.EntryForm?.value.accCode,
         drCr: this.EntryForm?.value.drCr == true ? "CR" : "DR",
-        amount: this.formatNumber(this.EntryForm?.value.amount),
+        amount: formatNumber(this.EntryForm?.value.amount),
         branchName: this.branches.filter(branch => branch.code === this.EntryForm?.value.branchCode)[0].name,
-        cr: (this.EntryForm?.value.drCr == true ? this.formatNumber(this.EntryForm?.value.amount) : ""),
-        dr: (this.EntryForm?.value.drCr == true ? "" : this.formatNumber(this.EntryForm?.value.amount)),
+        cr: (this.EntryForm?.value.drCr == true ? formatNumber(this.EntryForm?.value.amount) : ""),
+        dr: (this.EntryForm?.value.drCr == true ? "" : formatNumber(this.EntryForm?.value.amount)),
         id: 0,
         headerId: 0,
         seqNo: 0
@@ -260,8 +254,8 @@ export class ConfigEntriesComponent {
 
       this.debitTotal = this.debitTotal + (this.EntryForm?.value.drCr == true ? 0 : Number(this.EntryForm?.value.amount))
       this.creditTotal = this.creditTotal + (this.EntryForm?.value.drCr == true ? Number(this.EntryForm?.value.amount) : 0)
-      this.debitTotalFormated = this.formatNumber(this.debitTotal)
-      this.creditTotalFormated = this.formatNumber(this.creditTotal)
+      this.debitTotalFormated = formatNumber(this.debitTotal)
+      this.creditTotalFormated = formatNumber(this.creditTotal)
       this.ClearEntryDetails();
     }
   }
@@ -278,8 +272,8 @@ export class ConfigEntriesComponent {
 
     this.debitTotal = this.debitTotal - (entryDetail.drCr == 'CR' ? 0 : Number(amount!.replace(/,/g, "")))
     this.creditTotal = this.creditTotal - (entryDetail.drCr == 'DR' ? 0 : Number(amount!.replace(/,/g, "")))
-    this.debitTotalFormated = this.formatNumber(this.debitTotal)
-    this.creditTotalFormated = this.formatNumber(this.creditTotal)
+    this.debitTotalFormated = formatNumber(this.debitTotal)
+    this.creditTotalFormated = formatNumber(this.creditTotal)
 
     this.dt2!.filterGlobal('', 'contains');
   }
@@ -328,7 +322,7 @@ export class ConfigEntriesComponent {
     this.entryDetailsList = [];
     this.debitTotal = 0;
     this.creditTotal = 0;
-    this.debitTotalFormated = this.formatNumber(this.debitTotal)
-    this.creditTotalFormated = this.formatNumber(this.creditTotal)
+    this.debitTotalFormated = formatNumber(this.debitTotal)
+    this.creditTotalFormated = formatNumber(this.creditTotal)
   }
 }

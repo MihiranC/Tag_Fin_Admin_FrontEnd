@@ -1,0 +1,341 @@
+<span class="pi pi-search" style="cursor: pointer; font-size: 1.3rem" (click)="OpenCalGenerate()"></span>
+<p-dialog header="E V O F I N &nbsp;&nbsp; Cal" [modal]="true" [(visible)]="visible" [style]="{ width: '100%' }"
+    [breakpoints]="{ '2199px': '95vw', '1024px': '95vw', '600px': '100vw' }" [maximizable]="true">
+    <p-tabView>
+        <p-tabPanel header="Cal Details">
+            <form [formGroup]="CalForm!">
+                <app-messages></app-messages>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="sub-card-container row">
+                            <div class="sub-card-title n-text-sub md">Fill Details</div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="p-field p-fluid">
+                                        <label>Product</label>
+                                        <p-dropdown [options]="products" optionLabel="name" [filter]="true"
+                                            filterBy="name" [showClear]="true" placeholder="Select a product"
+                                            formControlName="productCode" optionValue="code">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="p-field p-fluid">
+                                        <label>Cal Method</label>
+                                        <p-dropdown [options]="calMethods" optionLabel="name" [filter]="true"
+                                            filterBy="name" [showClear]="true" placeholder="Select a cal method"
+                                            formControlName="calMethod" optionValue="code">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="p-field p-fluid">
+                                        <label>Cal Method Frequency</label>
+                                        <p-dropdown [options]="calMethods" optionLabel="name" [filter]="true"
+                                            filterBy="name" [showClear]="true"
+                                            placeholder="Select a cal method frequency"
+                                            formControlName="calMethodFrequency" optionValue="code">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="p-field p-fluid">
+                                        <label>Loan Amount</label>
+                                        <div class="flex">
+                                            <p-inputNumber formControlName="loanAmount" inputId="locale-user"
+                                                [minFractionDigits]="2" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="p-field p-fluid">
+                                        <label>No of Installements</label>
+                                        <div class="flex">
+                                            <p-inputNumber formControlName="noOfInstallements" inputId="locale-user"
+                                                [minFractionDigits]="2" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="p-field p-fluid">
+                                        <label>Rate % (p.a.)</label>
+                                        <div class="flex">
+                                            <p-inputNumber formControlName="anualRate" inputId="locale-user"
+                                                [minFractionDigits]="2" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex justify-content-end">
+                                        <button type="button" class="primary-buttons p-button-blue" pButton pRipple
+                                            (click)="GenerateSchedule()">
+                                            <span style="width: 100%;">Generate Schedule</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="sub-card-container row">
+                                        <div class="sub-card-title n-text-sub md">Schedule</div>
+                                        <p-tabView>
+                                            <p-tabPanel header="Main Schedule">
+                                                <p-table #dtMainSchedule [value]="schedule"
+                                                    styleClass="p-datatable-striped p-datatable-sm sm expanded-table"
+                                                    [tableStyle]="{'min-width': '50rem'}" [paginator]="true" [rows]="5"
+                                                    [rowsPerPageOptions]="[5, 10, 20]" [expandedRowKeys]="expandedRows"
+                                                    dataKey="rentalNumber">
+                                                    <ng-template pTemplate="header">
+                                                        <tr>
+                                                            <th style="width: 5rem"></th>
+                                                            <th>Rental Number</th>
+                                                            <th style="text-align: right;">Net Rental</th>
+                                                            <th style="text-align: right;">Capital</th>
+                                                            <th style="text-align: right;">Capital Balance</th>
+                                                            <th style="text-align: right;">Interest</th>
+                                                            <th style="text-align: right;">Int Balance</th>
+                                                            <th style="text-align: right;">Capitalized Charge Capital
+                                                            </th>
+                                                            <th style="text-align: right;">Cap. Charge Int</th>
+                                                        </tr>
+                                                    </ng-template>
+                                                    <ng-template pTemplate="body" let-schedule let-expanded="expanded">
+                                                        <tr>
+                                                            <td class="sm">
+                                                                <p-button type="button" pRipple [pRowToggler]="schedule"
+                                                                    [text]="true" [rounded]="true" [plain]="true"
+                                                                    [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+                                                            </td>
+                                                            <td>{{schedule.rentalNumber}}</td>
+                                                            <td style="text-align: right;">{{schedule.netRental}}</td>
+                                                            <td style="text-align: right;">{{schedule.capital}}</td>
+                                                            <td style="text-align: right;">{{schedule.capitalBalance}}
+                                                            </td>
+                                                            <td style="text-align: right;">{{schedule.interestPortion}}
+                                                            </td>
+                                                            <td style="text-align: right;">{{schedule.interestBalance}}
+                                                            </td>
+                                                            <td style="text-align: right;">
+                                                                {{schedule.chargePortionPrincipal}}</td>
+                                                            <td style="text-align: right;">
+                                                                {{schedule.chargePortionInterest}}</td>
+                                                        </tr>
+                                                    </ng-template>
+                                                    <ng-template pTemplate="rowexpansion" let-schedule>
+                                                        <tr>
+                                                            <td colspan="9">
+                                                                <p-table [value]="schedule.capitalizedChargeDetails"
+                                                                    dataKey="rentalNumber"
+                                                                    styleClass="p-datatable-striped p-datatable-sm sm child-table w-100">
+                                                                    <ng-template pTemplate="header">
+                                                        <tr>
+                                                            <th>Charge</th>
+                                                            <th style="text-align: right;">Net Rental</th>
+                                                            <th style="text-align: right;">Capital</th>
+                                                            <th style="text-align: right;">Capital Balance</th>
+                                                            <th style="text-align: right;">Interest</th>
+                                                            <th style="text-align: right;">Int Balance</th>
+                                                        </tr>
+                                                    </ng-template>
+                                                    <ng-template pTemplate="body" let-capitalizedChargeDetails>
+                                                        <tr>
+                                                            <td>{{capitalizedChargeDetails.charge}}</td>
+                                                            <td style="text-align: right;">
+                                                                {{capitalizedChargeDetails.netRental}}
+                                                            </td>
+                                                            <td style="text-align: right;">
+                                                                {{capitalizedChargeDetails.capital}}
+                                                            </td>
+                                                            <td style="text-align: right;">
+                                                                {{capitalizedChargeDetails.capitalBalance}}</td>
+                                                            <td style="text-align: right;">
+                                                                {{capitalizedChargeDetails.interestPortion}}</td>
+                                                            <td style="text-align: right;">
+                                                                {{capitalizedChargeDetails.interestBalance}}
+                                                        </tr>
+                                                    </ng-template>
+                                                    <ng-template pTemplate="emptymessage">
+                                                        <tr>
+                                                            <td colspan="5">There are no capitalized charges yet.</td>
+                                                        </tr>
+                                                    </ng-template>
+                                                </p-table>
+                                                </td>
+                                                </tr>
+                                                </ng-template>
+                                                </p-table>
+                                            </p-tabPanel>
+                                            <p-tabPanel header="Loan Summary">
+                                                <table class="note-table">
+                                                    <tr>
+                                                        <td class="title">Loan Amount</td>
+                                                        <td class="title">No of Installements</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="description">{{_LoanAmount}}</td>
+                                                        <td class="description">{{_NoofInstallements}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="title">Rate (p.a.)%</td>
+                                                        <td class="title">Net Rental</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="description">{{_Rate}}</td>
+                                                        <td class="description">{{_NetRental}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="title">Total Capital</td>
+                                                        <td class="title">Total Interest</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="description">{{_TotalCapital}}</td>
+                                                        <td class="description">{{_TotalInterest}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="title">Total Capital on Chargers</td>
+                                                        <td class="title">Total Interest on Chargers</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="description">{{_TotalCapitalonChargers}}</td>
+                                                        <td class="description">{{_TotalInterestonChargers}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="title">New Interest Rate After Capitalized</td>
+                                                        <td class="title">Total Receivable</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="description">{{_NewInterestRateAfterCapitalized}}</td>
+                                                        <td class="description">{{_TotalReceivable}}</td>
+                                                    </tr>
+                                                </table>
+                                            </p-tabPanel>
+                                        </p-tabView>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="sub-card-container row">
+                                        <div class="sub-card-title n-text-sub md">Chargers</div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="p-field p-fluid">
+                                                    <label>Charge</label>
+                                                    <p-dropdown [options]="chargers" optionLabel="name" [filter]="true"
+                                                        filterBy="name" [showClear]="true" placeholder="Select a charge"
+                                                        formControlName="chargeCode" optionValue="code">
+                                                    </p-dropdown>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="p-field p-fluid">
+                                                    <label>Charge Amount</label>
+                                                    <div class="flex">
+                                                        <p-inputNumber formControlName="chargeAmount"
+                                                            inputId="locale-user" [minFractionDigits]="2" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="p-field p-fluid">
+                                                    <label>Capitalized?</label>
+                                                    <p-toggleButton onLabel="Yes" offLabel="No" onIcon="pi pi-check"
+                                                        offIcon="pi pi-times" onIcon="pi pi-check" offIcon="pi pi-times"
+                                                        styleClass="toggle-default" ariaLabel="Do you confirm"
+                                                        formControlName="isCapitalaized" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4">
+
+                                            </div>
+                                            <div class="col-md-4">
+
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="d-flex justify-content-end">
+                                                    <button type="submit" class="primary-buttons p-button-green" pButton
+                                                        pRipple (click)="addCharge()">
+                                                        <span>Add</span>
+                                                    </button>
+
+                                                    <button type="button" class="primary-buttons p-button-yellow"
+                                                        pButton pRipple (click)="clearChargeForm()">
+                                                        <span>Clear</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p-table #dtChargers [value]="appWiseChargers"
+                                                    styleClass="p-datatable-striped p-datatable-sm sm"
+                                                    [tableStyle]="{'min-width': '500px'}" [paginator]="true" [rows]="5"
+                                                    [rowsPerPageOptions]="[5, 10, 20]">
+                                                    <ng-template pTemplate="header">
+                                                        <tr>
+                                                            <th>Charge</th>
+                                                            <th style="text-align: center;">Capitalized?</th>
+                                                            <th style="text-align: right;">Amount</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </ng-template>
+                                                    <ng-template pTemplate="body" let-charge>
+                                                        <tr>
+                                                            <td>{{charge.charge}}</td>
+                                                            @if(charge.isCapitalized==true){
+                                                            <td style="color: green; text-align: center;"><i
+                                                                    class="pi pi-check"></i></td>
+                                                            }@else{
+                                                            <td style="color: red; text-align: center;"><i
+                                                                    class="pi pi-times"></i></td>
+                                                            }
+                                                            <td style="text-align: right;">{{charge.amount}}</td>
+                                                            <td style="text-align: right;">
+                                                                <button type="button" pButton pRipple icon="pi pi-trash"
+                                                                    class="p-button-red" (click)="deleteCharge(charge)">
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </ng-template>
+                                                </p-table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="primary-buttons p-button-green" pButton pRipple
+                                    [disabled]="CustomerForm?.invalid">
+                                    <span>{{OperationBtnText}}</span>
+                                </button>
+                                <button type="button" class="primary-buttons p-button-yellow" pButton pRipple (click)="clearForm()">
+                                    <span>Clear</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </p-tabPanel>
+        <p-tabPanel header="Existing Cals" >
+            <div style="min-height: 468px;">
+
+            </div>
+        </p-tabPanel>
+    </p-tabView>
+</p-dialog>

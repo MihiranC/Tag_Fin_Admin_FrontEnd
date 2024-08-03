@@ -38,6 +38,8 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputMaskModule } from 'primeng/inputmask';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { MenubarModule } from 'primeng/menubar';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
     declarations: [],
@@ -77,7 +79,9 @@ import { MenubarModule } from 'primeng/menubar';
     InputIconModule,
     InputMaskModule,
     SelectButtonModule,
-    MenubarModule
+    MenubarModule,
+    TabMenuModule,
+    TabViewModule
     //Add more modules as needed
     ],
 
@@ -116,7 +120,9 @@ import { MenubarModule } from 'primeng/menubar';
     InputIconModule,
     InputMaskModule,
     SelectButtonModule,
-    MenubarModule
+    MenubarModule,
+    TabMenuModule,
+    TabViewModule
         // Add more modules as needed
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],

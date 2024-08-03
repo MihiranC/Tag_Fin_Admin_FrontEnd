@@ -189,6 +189,19 @@ p-togglebutton .p-button {
   color: white; // Add this if you want to keep the text color white for p-highlight as well
 }
 
+.toggle-default .pi{
+  color: white;
+}
+
+.toggle-default {
+  background: rgb(113, 114, 119);
+  color: white;
+}
+.toggle-default.p-highlight {
+  background: rgb(51, 76, 156) !important;
+  color: white; // Add this if you want to keep the text color white for p-highlight as well
+}
+
 .p-datepicker table td>span {
   width: 1.5rem;
   height: 1.5rem;
@@ -210,4 +223,44 @@ ul {
 
 a {
   text-decoration: none !important;
+}
+
+.p-highlight{
+  color: $primary-color;
+}
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  background: #ffffff;
+  border-color: $primary-color;
+  color: $primary-color;
+}
+
+.p-tabview-nav-link{
+  color:$primary-menu-color 
+}
+
+.expanded-table .p-button.p-button-icon-only.p-button-rounded {
+  height: auto !important;
+}
+
+.expanded-table .p-button {
+  padding: 2px 15px !important;
+  border-radius: 5px;
+  margin: 0px;
+}
+
+.child-table{
+  background-color: #6c9fea;
+}
+
+.p-tabview .p-tabview-panels {
+  padding: 5px 3px;
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  padding: 10px 30px;
+}
+
+.p-dialog .p-dialog-header {
+  padding: 1.5rem 0.5rem 1.5rem 1.5rem;
 }

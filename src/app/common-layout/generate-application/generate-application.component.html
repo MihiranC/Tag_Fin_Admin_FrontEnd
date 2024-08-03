@@ -1,0 +1,25 @@
+<div class="main-card-container">
+    <app-messages></app-messages>
+    <div class="main-card-title n-text-primary lg">Fill Application Details</div>
+    <form [formGroup]="AppForm!">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="p-field p-fluid">
+                    <label>Appication Code</label>
+                    <div class="flex">
+                        <input pInputText type="text" formControlName="appCode">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-field p-fluid">
+                    <label>Cal No</label>
+                    <div class="flex">
+                        <input pInputText id="calNo" type="text" formControlName="calNo" readonly="true">
+                        &nbsp;<app-cal-generate (getSelected)="SelectCalNo($event)"></app-cal-generate>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

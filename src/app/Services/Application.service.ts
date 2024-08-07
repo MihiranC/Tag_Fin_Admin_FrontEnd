@@ -8,6 +8,7 @@ import { Response } from '../Models/Response';
 import { Accounts, EntryHeader, SubAccCategories } from '../Models/Accounts';
 import { UpdateData } from '../Models/UpdateData';
 import { ScheduleInputs } from '../Models/Schedule';
+import { CalDetails } from '../Models/Application';
 
 
 @Injectable({
@@ -23,5 +24,17 @@ export class ApplicationService {
 
   GenerateSchedule(data: ScheduleInputs): Observable<any> {
     return this.HttpService.postData(data,'api/TagFin/Application/GenerateSchedule',this.GlobalService.finApiUrl)
+  }
+
+  InsertCaldetails(data: CalDetails): Observable<any> {
+    return this.HttpService.postData(data,'api/TagFin/Application/InsertCaldetails',this.GlobalService.finApiUrl)
+  }
+
+  UpdateCaldetails(data: CalDetails): Observable<any> {
+    return this.HttpService.postData(data,'api/TagFin/Application/UpdateCaldetails',this.GlobalService.finApiUrl)
+  }
+
+  DeleteCaldetails(data: CalDetails): Observable<any> {
+    return this.HttpService.postData(data,'api/TagFin/Application/DeleteCaldetails',this.GlobalService.finApiUrl)
   }
 }

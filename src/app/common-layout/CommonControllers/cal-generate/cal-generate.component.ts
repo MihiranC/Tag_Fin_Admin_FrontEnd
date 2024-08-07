@@ -6,6 +6,7 @@ import { AppWiseChargers, CalDetails, CalMethodFrequency, CalMethods, Chargers, 
 import { CapitalizedCharges, CapitalizedSchedule, Schedule, ScheduleInputs } from '../../../Models/Schedule';
 import { ApplicationService } from '../../../Services/Application.service';
 import { convertToNumber, formatNumber } from '../../../common-functions/number';
+import { ReferenceService } from '../../../Services/Reference.service';
 
 @Component({
   selector: 'app-cal-generate',
@@ -29,6 +30,8 @@ export class CalGenerateComponent {
   calMethodFrequency: CalMethodFrequency[] = []
   ScheduleInputsObj: ScheduleInputs = new ScheduleInputs();
   chargers: Chargers[] = []
+  mandetoryChargers: Chargers[] = []
+  nonMandetoryChargers: Chargers[] = []
   appWiseChargers: AppWiseChargers[] = []
 
   //Schedule
@@ -51,9 +54,18 @@ export class CalGenerateComponent {
   _NewInterestRateAfterCapitalized: string = ''
   _TotalReceivable: string = ''
 
+  OperationandUseBtnText : string = "Save and Use"
+  OperationBtnText : string = "Save"
+
+  calDetails : CalDetails = new CalDetails();
+
+  userid: number = Number(sessionStorage.getItem('LoggedUserID')!)
+  capitalizedSchedule : CapitalizedSchedule[] = []
+
   constructor(
     private fb: FormBuilder,
     public applicationService: ApplicationService,
+    public referenceService: ReferenceService,
   ) {
     this.CalForm = this.fb.group({
       productCode: new FormControl(''),
@@ -71,39 +83,121 @@ export class CalGenerateComponent {
   OpenCalGenerate() {
     this.visible = true;
     this.selectProducts()
-    this.selectCalMethods()
-    this.selectChargers()
+    //this.selectCalMethods()
+    this.selectCalMethodFrequency()
   }
 
   selectProducts() {
     this.products = []
-    this.products.push({
-      code: "L",
-      name: "Lease"
-    })
+    this.referenceService.SelectProducts('')
+    .subscribe({
+      next: (data: any) => {
+        if (data.code == "1000") {
+         this.products = data.data
+        }
+        else {
+          this.messagesComponent!.showError(data.description);
+        }
+      },
+      error: (error: any) => {
+        this.messagesComponent?.showError(error);
+      },
+    });
   }
 
-  selectCalMethods() {
+  loadDataAgainstProducts(product : any){
+    this.selectCalMethods(product)
+    this.selectChargers(product)
+  }
+
+  selectCalMethods(productCode : string) {
     this.calMethods = []
-    this.calMethods.push({
-      code: "RB",
-      name: "Reducing Balance"
-    })
+    this.referenceService.SelectProductWiseCalMethods(productCode)
+    .subscribe({
+      next: (data: any) => {
+        if (data.code == "1000") {
+         this.calMethods = data.data
+        }
+        else {
+          this.messagesComponent!.showError(data.description);
+        }
+      },
+      error: (error: any) => {
+        this.messagesComponent?.showError(error);
+      },
+    });
   }
 
-  selectChargers() {
+  selectChargers(productCode : string) {
     this.chargers = []
-    this.chargers.push({
-      code: "SD",
-      name: "Stamp duty"
-    },
-    {
-      code: "PC",
-      name: "Paper charge"
-    })
+    this.referenceService.SelectProductWiseChargers('',productCode)
+    .subscribe({
+      next: (data: any) => {
+        if (data.code == "1000") {
+         this.chargers = data.data
+         this.mandetoryChargers = data.data
+         setTimeout(() => {          
+          this.nonMandetoryChargers = this.chargers.filter(charge => charge.isMandetory === false)
+          this.mandetoryChargers = this.mandetoryChargers.filter(charge => charge.isMandetory === true)
+
+          this.mandetoryChargers.forEach(chgers=>{
+            this.appWiseChargers.push({
+              chargeCode : chgers.chargeCode,
+              amount : chgers.amount,
+              charge : this.mandetoryChargers.filter(charge => charge.chargeCode === chgers.chargeCode)[0].chargeName,
+              isCapitalized : chgers.isCapitalized,
+              isFixed : chgers.isFixed,
+              percentage : chgers.percentage,
+              deleteEnable : false,
+              isMandetory : true
+            })
+          })
+         }, 200);
+        }
+        else {
+          this.messagesComponent!.showError(data.description);
+        }
+      },
+      error: (error: any) => {
+        this.messagesComponent?.showError(error);
+      },
+    });
+  }
+
+  selectCalMethodFrequency() {
+    this.calMethodFrequency = []
+    this.referenceService.SelectCalMethdFrequency()
+    .subscribe({
+      next: (data: any) => {
+        if (data.code == "1000") {
+         this.calMethodFrequency = data.data
+        }
+        else {
+          this.messagesComponent!.showError(data.description);
+        }
+      },
+      error: (error: any) => {
+        this.messagesComponent?.showError(error);
+      },
+    });
   }
 
   GenerateSchedule() {
+
+    this.capitalizedCharges = []
+
+    this.appWiseChargers.forEach(chg=>{
+      if(chg.isMandetory ==true && chg.percentage != 0){
+        chg.amount = formatNumber(Number(this.CalForm!.value.loanAmount)*chg.percentage!/100)
+      }
+      if(chg.isCapitalized){
+        this.capitalizedCharges.push({
+          code: chg.chargeCode,
+          amount: convertToNumber(chg.amount!)
+        })
+      }
+    })
+
     //this.schedule = [];
     this.ScheduleInputsObj.loanAmount = String(this.CalForm!.value.loanAmount);
     this.ScheduleInputsObj.numberOfMonths = String(this.CalForm!.value.noOfInstallements);
@@ -120,13 +214,13 @@ export class CalGenerateComponent {
 
             this._LoanAmount = this.schedule[0].capitalBalance!
             this._NoofInstallements = formatNumber(Number(this.CalForm!.value.noOfInstallements))
-            this._Rate = formatNumber(Number(this.CalForm!.value.anualRate)) + '%'
+            this._Rate = formatNumber(Number(this.CalForm!.value.anualRate))
             this._NetRental = this.schedule[0].netRental!
             this._TotalCapital = this.schedule[0].capitalBalance!
             this._TotalInterest = this.schedule[0].interestBalance!
             this._TotalCapitalonChargers = this.schedule[0].chargePortionPrincipalBalance!
             this._TotalInterestonChargers = this.schedule[0].interestBalanceOnCharges!
-            this._NewInterestRateAfterCapitalized = this.schedule[0].effectiveInterestRate + '%'!
+            this._NewInterestRateAfterCapitalized = this.schedule[0].effectiveInterestRate!
             this._TotalReceivable = formatNumber(Number(convertToNumber(this.schedule[0].capitalBalance!))
               + Number(convertToNumber(this.schedule[0].interestBalance!))
               + Number(convertToNumber(this.schedule[0].chargePortionPrincipalBalance!))
@@ -149,11 +243,12 @@ export class CalGenerateComponent {
                     next: (data: any) => {
                       if (data.code == "1000") {
                         let capSchedule: CapitalizedSchedule[] = data.data;
+                        this.capitalizedSchedule.push(...capSchedule)
 
                         this.schedule.forEach(sdl => {
                           let filteredRentals: CapitalizedSchedule[] = capSchedule.filter(capsdl => capsdl.rentalNumber === sdl.rentalNumber)
                           filteredRentals.forEach(rental => {
-                            rental.charge = this.chargers.filter(charge => charge.code === capCharge.code)[0].name;
+                            rental.charge = this.chargers.filter(charge => charge.chargeCode === capCharge.code)[0].chargeName;
                             rental.chargeCode = capCharge.code;
                           });
                           if (sdl.capitalizedChargeDetails == null) {
@@ -196,25 +291,24 @@ export class CalGenerateComponent {
     if (this.schedule.length <= 0) {
       this.messagesComponent?.showError("Before adding chargers, please generate the schedule");
     } else if (this.appWiseChargers.filter(charge => charge.chargeCode === this.CalForm!.value.chargeCode).length > 0) {
-      this.messagesComponent?.showError("Selected charge (" + this.chargers.filter(charge => charge.code === this.CalForm!.value.chargeCode)[0].name + ") is already exits");
+      this.messagesComponent?.showError("Selected charge (" + this.chargers.filter(charge => charge.chargeCode === this.CalForm!.value.chargeCode)[0].chargeName + ") is already exits");
     } else if (this.CalForm!.value.chargeCode == "") {
       this.messagesComponent?.showError("Please select a charge to add");
     } else if (Number(this.CalForm!.value.chargeAmount) <= 0) {
       this.messagesComponent?.showError("Invalid charge amount");
     } else {
       this.appWiseChargers.push({
-        charge: this.chargers.filter(charge => charge.code === this.CalForm!.value.chargeCode)[0].name,
+        charge: this.chargers.filter(charge => charge.chargeCode === this.CalForm!.value.chargeCode)[0].chargeName,
         chargeCode: this.CalForm!.value.chargeCode,
         amount: formatNumber(this.CalForm!.value.chargeAmount),
         isCapitalized: this.CalForm!.value.isCapitalaized,
+        isFixed : false,
+        percentage : 0.00,
+        deleteEnable : true,
+        isMandetory : false
       })
 
       if (this.CalForm!.value.isCapitalaized === true) {
-        this.capitalizedCharges.push({
-          code: this.CalForm!.value.chargeCode,
-          amount: String(this.CalForm!.value.chargeAmount)
-        })
-
         this.GenerateSchedule();
       }
     }
@@ -235,5 +329,74 @@ export class CalGenerateComponent {
   selectToPage(calDetails: CalDetails) {
     this.getSelected.emit(calDetails);
     this.visible = false;
+  }
+
+  
+  saveCal(){
+    this.calDetails.productCode = this.CalForm!.value.productCode;
+    this.calDetails.calMethod = this.CalForm!.value.calMethod;
+    this.calDetails.calFrequency = this.CalForm!.value.calMethodFrequency;
+    this.calDetails.loanAmount = String(this.CalForm!.value.loanAmount);
+    this.calDetails.period = String(this.CalForm!.value.noOfInstallements);
+    this.calDetails.rate = String(this.CalForm!.value.anualRate);
+    this.calDetails.totalInterest = this._TotalInterest
+    this.calDetails.totalChargeCapital = this._TotalCapitalonChargers
+    this.calDetails.totalInterestCharge = this._TotalInterestonChargers
+    this.calDetails.newRate = this._NewInterestRateAfterCapitalized
+    this.calDetails.totalReceivable = this._TotalReceivable
+    this.calDetails.userId = this.userid
+
+    this.calDetails.calWiseChargers = this.appWiseChargers
+    this.calDetails.capitalizedBreakup = []
+    this.calDetails.calSchedule = []
+
+    this.schedule.forEach(shdl=>{
+      this.calDetails.calSchedule?.push({
+        rentalNo : shdl.rentalNumber,
+        netRental : shdl.netRental,
+        capital : shdl.capital,
+        capitalBalance : shdl.capitalBalance,
+        interest : shdl.interestPortion,
+        interestBalance : shdl.interestBalance,
+        chargeCapital : shdl.chargePortionPrincipal,
+        chargeCapitalBalance : shdl.chargePortionPrincipalBalance,
+        chargeInterest : shdl.chargePortionInterest,
+        chargeInterestBalance : shdl.interestBalanceOnCharges,
+      })
+    })
+
+    this.capitalizedSchedule.forEach(shdl=>{
+      this.calDetails.capitalizedBreakup?.push({
+        rentalNo : shdl.rentalNumber,
+        netRental : shdl.netRental,
+        capital : shdl.capital,
+        capitalBalance : shdl.capitalBalance,
+        interest : shdl.interestPortion,
+        interestBalance : shdl.interestBalance,
+        chargeCapital : shdl.chargePortionPrincipal,
+        chargeCapitalBalance : shdl.chargePortionPrincipalBalance,
+        chargeInterest : shdl.chargePortionInterest,
+        chargeInterestBalance : shdl.interestBalanceOnCharges,
+        chargeCode : shdl.chargeCode
+      })
+    })
+    
+    if(this.OperationBtnText=="Save"){
+      this.applicationService.InsertCaldetails(this.calDetails)
+      .subscribe({
+        next: (data: any) => {
+          if (data.code == "1000") {
+            this.messagesComponent!.showSuccess("Successfully inserted - Code : "+data.data[0].code);
+          }
+          else {
+            this.messagesComponent!.showError(data.message);
+          }
+        },
+        error: (error: any) => {
+          this.messagesComponent?.showError(error);
+        },
+      });
+    }
+
   }
 }

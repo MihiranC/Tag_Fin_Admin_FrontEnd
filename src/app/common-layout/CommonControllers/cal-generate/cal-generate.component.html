@@ -4,7 +4,7 @@
     <p-tabView>
         <p-tabPanel header="Cal Details">
             <form [formGroup]="CalForm!">
-                <app-messages></app-messages>
+                <app-messages #cal></app-messages>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="sub-card-container row">
@@ -15,7 +15,7 @@
                                         <label>Product</label>
                                         <p-dropdown [options]="products" optionLabel="name" [filter]="true"
                                             filterBy="name" [showClear]="true" placeholder="Select a product"
-                                            formControlName="productCode" optionValue="code">
+                                            formControlName="productCode" (onChange)="loadDataAgainstProducts($event.value)" optionValue="code">
                                         </p-dropdown>
                                     </div>
                                 </div>
@@ -31,7 +31,7 @@
                                 <div class="col-md-2">
                                     <div class="p-field p-fluid">
                                         <label>Cal Method Frequency</label>
-                                        <p-dropdown [options]="calMethods" optionLabel="name" [filter]="true"
+                                        <p-dropdown [options]="calMethodFrequency" optionLabel="name" [filter]="true"
                                             filterBy="name" [showClear]="true"
                                             placeholder="Select a cal method frequency"
                                             formControlName="calMethodFrequency" optionValue="code">
@@ -73,7 +73,7 @@
                                     <div class="d-flex justify-content-end">
                                         <button type="button" class="primary-buttons p-button-blue" pButton pRipple
                                             (click)="GenerateSchedule()">
-                                            <span style="width: 100%;">Generate Schedule</span>
+                                            <span>Generate Schedule</span>
                                         </button>
                                     </div>
                                 </div>
@@ -160,7 +160,7 @@
                                                     </ng-template>
                                                     <ng-template pTemplate="emptymessage">
                                                         <tr>
-                                                            <td colspan="5">There are no capitalized charges yet.</td>
+                                                            <td colspan="6">There are no capitalized charges yet.</td>
                                                         </tr>
                                                     </ng-template>
                                                 </p-table>
@@ -184,7 +184,7 @@
                                                         <td class="title">Net Rental</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="description">{{_Rate}}</td>
+                                                        <td class="description">{{_Rate}}%</td>
                                                         <td class="description">{{_NetRental}}</td>
                                                     </tr>
                                                     <tr>
@@ -208,7 +208,7 @@
                                                         <td class="title">Total Receivable</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="description">{{_NewInterestRateAfterCapitalized}}</td>
+                                                        <td class="description">{{_NewInterestRateAfterCapitalized}}%</td>
                                                         <td class="description">{{_TotalReceivable}}</td>
                                                     </tr>
                                                 </table>
@@ -223,9 +223,9 @@
                                             <div class="col-md-12">
                                                 <div class="p-field p-fluid">
                                                     <label>Charge</label>
-                                                    <p-dropdown [options]="chargers" optionLabel="name" [filter]="true"
-                                                        filterBy="name" [showClear]="true" placeholder="Select a charge"
-                                                        formControlName="chargeCode" optionValue="code">
+                                                    <p-dropdown [options]="nonMandetoryChargers" optionLabel="chargeName" [filter]="true"
+                                                        filterBy="chargeName" [showClear]="true" placeholder="Select a charge"
+                                                        formControlName="chargeCode" optionValue="chargeCode">
                                                     </p-dropdown>
                                                 </div>
                                             </div>
@@ -299,7 +299,8 @@
                                                             <td style="text-align: right;">{{charge.amount}}</td>
                                                             <td style="text-align: right;">
                                                                 <button type="button" pButton pRipple icon="pi pi-trash"
-                                                                    class="p-button-red" (click)="deleteCharge(charge)">
+                                                                    class="p-button-red" (click)="deleteCharge(charge)"
+                                                                    [disabled]="!charge?.deleteEnable">
                                                                 </button>
                                                             </td>
                                                         </tr>
@@ -319,11 +320,13 @@
                         </div>
                         <div class="col-md-4">
                             <div class="d-flex justify-content-end">
-                                <button type="submit" class="primary-buttons p-button-green" pButton pRipple
-                                    [disabled]="CustomerForm?.invalid">
+                                <button type="submit" class="primary-buttons p-button-green" pButton pRipple (click)="saveCal()">
+                                    <span>{{OperationandUseBtnText}}</span>
+                                </button>
+                                <button type="submit" class="primary-buttons p-button-green" pButton pRipple (click)="saveCal()">
                                     <span>{{OperationBtnText}}</span>
                                 </button>
-                                <button type="button" class="primary-buttons p-button-yellow" pButton pRipple (click)="clearForm()">
+                                <button type="button" class="primary-buttons p-button-yellow" pButton pRipple>
                                     <span>Clear</span>
                                 </button>
                             </div>

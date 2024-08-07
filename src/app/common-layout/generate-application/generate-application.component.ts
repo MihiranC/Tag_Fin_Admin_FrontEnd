@@ -38,7 +38,8 @@ export class GenerateApplicationComponent {
 
   SelectCalNo(calDetails: CalDetails) {
     this.AppForm?.patchValue({
-      calNo: calDetails.calNo
+      calNo: calDetails.code
     })
   }
+
 }
